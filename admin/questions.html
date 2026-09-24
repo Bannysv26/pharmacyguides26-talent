@@ -1,256 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Question Management | PharmacyGuides26 Talent</title>
+  <title>Question Management | PharmacyGuides26 Talent</title>
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
+  <style>
 
-body{
-  background:#f5f7ff;
-  color:#172033;
-  min-height:100vh;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
-header{
-  background:white;
-  padding:18px 6%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  box-shadow:0 2px 12px rgba(0,0,0,.06);
-}
+    body {
+      background: #f5f7ff;
+      color: #172033;
+      min-height: 100vh;
+    }
 
-.logo{
-  font-size:22px;
-  font-weight:800;
-}
+    header {
+      background: white;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
 
-.logo span{
-  color:#6366f1;
-}
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+    }
 
-.back-btn{
-  background:#6366f1;
-  color:white;
-  text-decoration:none;
-  padding:10px 17px;
-  border-radius:9px;
-  font-weight:700;
-}
+    .logo span {
+      color: #6366f1;
+    }
 
-main{
-  width:90%;
-  max-width:1100px;
-  margin:30px auto;
-}
+    .back-btn {
+      background: #6366f1;
+      color: white;
+      text-decoration: none;
+      padding: 10px 17px;
+      border-radius: 9px;
+      font-weight: 700;
+    }
 
-.hero{
-  background:linear-gradient(135deg,#4f46e5,#8b5cf6);
-  color:white;
-  padding:30px;
-  border-radius:20px;
-  margin-bottom:25px;
-}
+    main {
+      width: 90%;
+      max-width: 1100px;
+      margin: 30px auto;
+    }
 
-.hero h1{
-  margin-bottom:8px;
-}
+    .hero {
+      background: linear-gradient(135deg, #4f46e5, #8b5cf6);
+      color: white;
+      padding: 30px;
+      border-radius: 20px;
+      margin-bottom: 25px;
+    }
 
-.card{
-  background:white;
-  padding:25px;
-  border-radius:18px;
-  box-shadow:0 7px 22px rgba(0,0,0,.06);
-  margin-bottom:25px;
-}
+    .hero h1 {
+      margin-bottom: 8px;
+    }
 
-label{
-  display:block;
-  font-weight:700;
-  margin-bottom:8px;
-}
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      box-shadow: 0 7px 22px rgba(0,0,0,0.06);
+      margin-bottom: 25px;
+    }
 
-select,textarea{
-  width:100%;
-  border:1px solid #d7dcef;
-  border-radius:10px;
-  padding:13px;
-  font-size:15px;
-  outline:none;
-}
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
 
-select{
-  margin-bottom:20px;
-}
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #d7dcef;
+      border-radius: 10px;
+      padding: 13px;
+      font-size: 15px;
+      outline: none;
+    }
 
-textarea{
-  min-height:420px;
-  resize:vertical;
-  line-height:1.5;
-}
+    select {
+      margin-bottom: 20px;
+    }
 
-.example{
-  background:#f8f7ff;
-  border:1px solid #ddd6fe;
-  padding:15px;
-  border-radius:10px;
-  margin:15px 0;
-  white-space:pre-wrap;
-  font-size:14px;
-}
+    textarea {
+      min-height: 450px;
+      resize: vertical;
+      line-height: 1.5;
+    }
 
-.buttons{
-  display:flex;
-  gap:12px;
-  margin-top:18px;
-  flex-wrap:wrap;
-}
+    .example {
+      background: #f8f7ff;
+      border: 1px solid #ddd6fe;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.5;
+    }
 
-button{
-  border:none;
-  padding:12px 20px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:700;
-}
+    .buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
 
-.preview-btn{
-  background:#6366f1;
-  color:white;
-}
+    button {
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
 
-.import-btn{
-  background:#16a34a;
-  color:white;
-}
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
-.clear-btn{
-  background:#ef4444;
-  color:white;
-}
+    .preview-btn {
+      background: #6366f1;
+      color: white;
+    }
 
-.status{
-  margin-top:15px;
-  padding:12px;
-  border-radius:10px;
-  display:none;
-}
+    .import-btn {
+      background: #16a34a;
+      color: white;
+    }
 
-.preview-item{
-  border:1px solid #e1e5f2;
-  border-radius:14px;
-  padding:18px;
-  margin-top:15px;
-  background:#fff;
-}
+    .clear-btn {
+      background: #ef4444;
+      color: white;
+    }
 
-.preview-item h3{
-  color:#6366f1;
-  margin-bottom:10px;
-}
+    .status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      display: none;
+      line-height: 1.5;
+    }
 
-.option{
-  padding:7px 10px;
-  background:#f8f9ff;
-  margin:5px 0;
-  border-radius:7px;
-}
+    .success {
+      color: #15803d;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
 
-.correct{
-  color:#15803d;
-  font-weight:700;
-  margin-top:10px;
-}
+    .errorBox {
+      color: #b91c1c;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+    }
 
-.error{
-  color:#dc2626;
-  font-weight:700;
-}
+    .question-count {
+      color: #6b7280;
+      margin-top: 10px;
+    }
 
-.success{
-  color:#15803d;
-  background:#f0fdf4;
-  border:1px solid #bbf7d0;
-}
+    .preview-item {
+      border: 1px solid #e1e5f2;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 15px;
+      background: #fff;
+    }
 
-.errorBox{
-  color:#b91c1c;
-  background:#fef2f2;
-  border:1px solid #fecaca;
-}
+    .preview-item h3 {
+      color: #6366f1;
+      margin-bottom: 10px;
+    }
 
-.question-count{
-  color:#6b7280;
-  margin-top:10px;
-}
+    .question-text {
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
 
-@media(max-width:600px){
-  header{
-    padding:15px 4%;
-  }
+    .option {
+      padding: 9px 12px;
+      background: #f8f9ff;
+      margin: 6px 0;
+      border-radius: 7px;
+    }
 
-  .logo{
-    font-size:18px;
-  }
+    .correct {
+      color: #15803d;
+      font-weight: 700;
+      margin-top: 12px;
+    }
 
-  main{
-    width:94%;
-  }
+    .imported {
+      color: #15803d;
+      font-weight: 700;
+      margin-top: 8px;
+    }
 
-  .hero{
-    padding:22px;
-  }
+    @media (max-width: 600px) {
 
-  textarea{
-    min-height:350px;
-  }
-}
-</style>
+      header {
+        padding: 15px 4%;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      main {
+        width: 94%;
+      }
+
+      .hero {
+        padding: 22px;
+      }
+
+      textarea {
+        min-height: 350px;
+      }
+
+    }
+
+  </style>
+
 </head>
+
 
 <body>
 
+
 <header>
+
   <div class="logo">
     PharmacyGuides<span>26</span> Talent
   </div>
 
-  <a href="index.html" class="back-btn">
+  <a
+    href="index.html"
+    class="back-btn">
     ← Admin Dashboard
   </a>
+
 </header>
 
 
 <main>
 
+
+  <!-- HERO -->
+
   <section class="hero">
-    <h1>❓ Bulk Question Import</h1>
-    <p>Paste multiple MCQs at once and import them automatically.</p>
+
+    <h1>
+      ❓ Bulk Question Import
+    </h1>
+
+    <p>
+      Paste multiple MCQs at once and import them automatically.
+    </p>
+
   </section>
 
 
+  <!-- IMPORT CARD -->
+
   <section class="card">
 
-    <h2>📚 Select Quiz</h2>
+    <h2>
+      📚 Select Quiz
+    </h2>
+
     <br>
+
 
     <select id="quizSelect">
-      <option value="">Loading quizzes...</option>
+
+      <option value="">
+        Loading quizzes...
+      </option>
+
     </select>
 
-    <h2>📋 Paste Questions</h2>
+
+    <h2>
+      📋 Paste Questions
+    </h2>
+
     <br>
 
+
     <div class="example">
+
 Example format:
 
 1. Which drug is primarily used as a bronchodilator in asthma?
@@ -258,7 +311,7 @@ A. Salbutamol
 B. Omeprazole
 C. Metformin
 D. Atorvastatin
-Answer: A
+Answer: B
 Marks: 1
 
 2. Which drug is a proton pump inhibitor?
@@ -269,64 +322,108 @@ D. Atorvastatin
 Answer: B
 Marks: 1
 
+3. Which drug is commonly used to treat type 2 diabetes?
+A. Metformin
+B. Warfarin
+C. Diazepam
+D. Salbutamol
+Answer: A
+Marks: 1
+
 You can paste 10, 50, 100 or more questions together.
+
     </div>
+
 
     <textarea
       id="bulkQuestions"
       placeholder="Paste all your questions here..."></textarea>
 
+
     <div class="buttons">
 
       <button
-        class="preview-btn"
-        id="previewBtn">
+        id="previewBtn"
+        class="preview-btn">
+
         🔍 Preview Questions
+
       </button>
 
+
       <button
-        class="import-btn"
-        id="importBtn">
+        id="importBtn"
+        class="import-btn">
+
         ⚡ Import All Questions
+
       </button>
 
+
       <button
-        class="clear-btn"
-        id="clearBtn">
+        id="clearBtn"
+        class="clear-btn">
+
         🗑️ Clear
+
       </button>
 
     </div>
 
-    <div id="status" class="status"></div>
+
+    <div
+      id="status"
+      class="status">
+    </div>
+
 
   </section>
 
 
+  <!-- PREVIEW -->
+
   <section class="card">
 
-    <h2>👁️ Question Preview</h2>
+    <h2>
+      👁️ Question Preview
+    </h2>
+
 
     <div
       id="questionCount"
       class="question-count">
+
       No questions parsed yet.
+
     </div>
+
 
     <div id="previewArea"></div>
 
   </section>
 
+
 </main>
+
 
 
 <script type="module">
 
-import { auth, db } from "../firebase-config.js";
+
+/* =========================================
+   FIREBASE
+========================================= */
+
+import {
+  auth,
+  db
+} from "../firebase-config.js";
+
 
 import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
 import {
   collection,
@@ -338,8 +435,19 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-const ADMIN_UID = "Q8MSRJIIF1RoWf1TdJ16gnWMFJO2";
 
+/* =========================================
+   ADMIN UID
+========================================= */
+
+const ADMIN_UID =
+  "Q8MSRJIIF1RoWf1TdJ16gnWMFJO2";
+
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
 
 const quizSelect =
   document.getElementById("quizSelect");
@@ -366,66 +474,100 @@ const status =
   document.getElementById("status");
 
 
+
 let parsedQuestions = [];
 
 
-/* =========================
-   ADMIN AUTHENTICATION
-========================= */
 
-onAuthStateChanged(auth, async (user) => {
+/* =========================================
+   AUTHENTICATION
+========================================= */
 
-  if (!user) {
-    window.location.href = "../login.html";
-    return;
+onAuthStateChanged(
+  auth,
+  async (user) => {
+
+    if (!user) {
+
+      window.location.href =
+        "../login.html";
+
+      return;
+    }
+
+
+    if (user.uid !== ADMIN_UID) {
+
+      alert(
+        "Access denied. Admins only."
+      );
+
+      window.location.href =
+        "../dashboard.html";
+
+      return;
+    }
+
+
+    await loadQuizzes();
+
   }
-
-  if (user.uid !== ADMIN_UID) {
-    alert("Access denied. Admins only.");
-    window.location.href = "../dashboard.html";
-    return;
-  }
-
-  await loadQuizzes();
-
-});
+);
 
 
-/* =========================
+
+/* =========================================
    LOAD QUIZZES
-========================= */
+========================================= */
 
-async function loadQuizzes(){
+async function loadQuizzes() {
 
-  try{
+  try {
 
     const snapshot =
-      await getDocs(collection(db,"quizzes"));
+      await getDocs(
+        collection(db, "quizzes")
+      );
+
 
     quizSelect.innerHTML =
-      `<option value="">Select a quiz</option>`;
+      `<option value="">
+        Select a quiz
+      </option>`;
 
-    snapshot.forEach((quizDoc)=>{
 
-      const quiz =
-        quizDoc.data();
+    snapshot.forEach(
+      (quizDoc) => {
 
-      const option =
-        document.createElement("option");
+        const quiz =
+          quizDoc.data();
 
-      option.value =
-        quizDoc.id;
 
-      option.textContent =
-        quiz.title || "Untitled Quiz";
+        const option =
+          document.createElement("option");
 
-      quizSelect.appendChild(option);
 
-    });
+        option.value =
+          quizDoc.id;
 
-  }catch(error){
+
+        option.textContent =
+          quiz.title ||
+          "Untitled Quiz";
+
+
+        quizSelect.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+  } catch (error) {
 
     console.error(error);
+
 
     showStatus(
       "Unable to load quizzes.",
@@ -437,32 +579,37 @@ async function loadQuizzes(){
 }
 
 
-/* =========================
-   PARSE QUESTIONS
-========================= */
 
-function parseQuestions(text){
+/* =========================================
+   PARSE QUESTIONS
+========================================= */
+
+function parseQuestions(text) {
+
 
   const cleaned =
     text
-      .replace(/\r/g,"")
+      .replace(/\r/g, "")
       .trim();
 
-  if(!cleaned){
+
+  if (!cleaned) {
+
     return [];
+
   }
 
 
   /*
-    Split whenever a new numbered
-    question begins.
+    Split questions when a new number
+    begins.
 
     Supports:
 
     1.
     2.
     3)
-
+    4)
   */
 
   const blocks =
@@ -474,21 +621,26 @@ function parseQuestions(text){
   const questions = [];
 
 
-  for(const block of blocks){
+  for (const block of blocks) {
+
 
     const lines =
       block
         .split("\n")
-        .map(line => line.trim())
+        .map(
+          line =>
+            line.trim()
+        )
         .filter(Boolean);
 
 
-    if(lines.length < 6){
+    if (lines.length < 6) {
+
       continue;
+
     }
 
 
-    // Remove question number
     let questionText =
       lines[0]
         .replace(
@@ -504,65 +656,110 @@ function parseQuestions(text){
     let optionD = "";
 
     let answer = "";
+
     let marks = 1;
 
-
-    /*
-      Sometimes the question wraps
-      onto multiple lines.
-
-      We collect text until A.
-    */
 
     let questionParts = [];
 
 
-    for(let i=0; i<lines.length; i++){
+    for (
+      let i = 0;
+      i < lines.length;
+      i++
+    ) {
 
-      const line = lines[i];
+
+      const line =
+        lines[i];
 
 
-      if(/^A[\.\):]\s*/i.test(line)){
+      /* OPTION A */
+
+      if (
+        /^A[\.\):]\s*/i
+          .test(line)
+      ) {
+
         optionA =
-          line.replace(
-            /^A[\.\):]\s*/i,
-            ""
-          ).trim();
+          line
+            .replace(
+              /^A[\.\):]\s*/i,
+              ""
+            )
+            .trim();
+
         continue;
+
       }
 
 
-      if(/^B[\.\):]\s*/i.test(line)){
+      /* OPTION B */
+
+      if (
+        /^B[\.\):]\s*/i
+          .test(line)
+      ) {
+
         optionB =
-          line.replace(
-            /^B[\.\):]\s*/i,
-            ""
-          ).trim();
+          line
+            .replace(
+              /^B[\.\):]\s*/i,
+              ""
+            )
+            .trim();
+
         continue;
+
       }
 
 
-      if(/^C[\.\):]\s*/i.test(line)){
+      /* OPTION C */
+
+      if (
+        /^C[\.\):]\s*/i
+          .test(line)
+      ) {
+
         optionC =
-          line.replace(
-            /^C[\.\):]\s*/i,
-            ""
-          ).trim();
+          line
+            .replace(
+              /^C[\.\):]\s*/i,
+              ""
+            )
+            .trim();
+
         continue;
+
       }
 
 
-      if(/^D[\.\):]\s*/i.test(line)){
+      /* OPTION D */
+
+      if (
+        /^D[\.\):]\s*/i
+          .test(line)
+      ) {
+
         optionD =
-          line.replace(
-            /^D[\.\):]\s*/i,
-            ""
-          ).trim();
+          line
+            .replace(
+              /^D[\.\):]\s*/i,
+              ""
+            )
+            .trim();
+
         continue;
+
       }
 
 
-      if(/^Answer\s*:/i.test(line)){
+      /* ANSWER */
+
+      if (
+        /^Answer\s*:/i
+          .test(line)
+      ) {
 
         answer =
           line
@@ -572,10 +769,16 @@ function parseQuestions(text){
             .charAt(0);
 
         continue;
+
       }
 
 
-      if(/^Marks\s*:/i.test(line)){
+      /* MARKS */
+
+      if (
+        /^Marks\s*:/i
+          .test(line)
+      ) {
 
         const value =
           Number(
@@ -584,55 +787,87 @@ function parseQuestions(text){
               .trim()
           );
 
-        if(!isNaN(value) && value > 0){
+
+        if (
+          !isNaN(value) &&
+          value > 0
+        ) {
+
           marks = value;
+
         }
 
         continue;
+
       }
 
 
       /*
-        Anything before A is part
-        of the question.
+        Text before option A
+        belongs to question.
       */
 
-      if(!optionA){
+      if (!optionA) {
+
         questionParts.push(line);
+
       }
 
     }
 
 
-    if(questionParts.length > 0){
+    if (
+      questionParts.length > 0
+    ) {
+
       questionText =
-        questionParts.join(" ").trim();
+        questionParts.join(" ")
+          .trim();
+
     }
 
 
-    if(
+    /*
+      Only accept complete questions.
+    */
+
+    if (
+
       questionText &&
+
       optionA &&
+
       optionB &&
+
       optionC &&
+
       optionD &&
-      ["A","B","C","D"].includes(answer)
-    ){
+
+      ["A","B","C","D"]
+        .includes(answer)
+
+    ) {
+
 
       questions.push({
 
-        question: questionText,
+        question:
+          questionText,
 
         options: {
+
           A: optionA,
           B: optionB,
           C: optionC,
           D: optionD
+
         },
 
-        correctAnswer: answer,
+        correctAnswer:
+          answer,
 
-        marks: marks
+        marks:
+          marks
 
       });
 
@@ -646,13 +881,15 @@ function parseQuestions(text){
 }
 
 
-/* =========================
+
+/* =========================================
    PREVIEW
-========================= */
+========================================= */
 
 previewBtn.addEventListener(
   "click",
   () => {
+
 
     parsedQuestions =
       parseQuestions(
@@ -660,20 +897,26 @@ previewBtn.addEventListener(
       );
 
 
-    previewArea.innerHTML = "";
+    previewArea.innerHTML =
+      "";
 
 
-    if(parsedQuestions.length === 0){
+    if (
+      parsedQuestions.length === 0
+    ) {
 
       questionCount.textContent =
         "No valid questions found.";
 
+
       showStatus(
-        "Please check your format. Every question needs A, B, C, D and Answer.",
+        "Please check the format. Every question needs A, B, C, D and Answer.",
         "errorBox"
       );
 
+
       return;
+
     }
 
 
@@ -682,10 +925,14 @@ previewBtn.addEventListener(
 
 
     parsedQuestions.forEach(
-      (q,index)=>{
+      (q, index) => {
+
 
         const div =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
+
 
         div.className =
           "preview-item";
@@ -697,11 +944,9 @@ previewBtn.addEventListener(
             Question ${index + 1}
           </h3>
 
-          <p>
-            <strong>
-              ${escapeHtml(q.question)}
-            </strong>
-          </p>
+          <div class="question-text">
+            ${escapeHtml(q.question)}
+          </div>
 
           <div class="option">
             A. ${escapeHtml(q.options.A)}
@@ -729,7 +974,9 @@ previewBtn.addEventListener(
         `;
 
 
-        previewArea.appendChild(div);
+        previewArea.appendChild(
+          div
+        );
 
       }
     );
@@ -744,19 +991,21 @@ previewBtn.addEventListener(
 );
 
 
-/* =========================
-   IMPORT QUESTIONS
-========================= */
+
+/* =========================================
+   IMPORT
+========================================= */
 
 importBtn.addEventListener(
   "click",
   async () => {
 
+
     const quizId =
       quizSelect.value;
 
 
-    if(!quizId){
+    if (!quizId) {
 
       showStatus(
         "Please select a quiz first.",
@@ -764,10 +1013,13 @@ importBtn.addEventListener(
       );
 
       return;
+
     }
 
 
-    if(parsedQuestions.length === 0){
+    if (
+      parsedQuestions.length === 0
+    ) {
 
       parsedQuestions =
         parseQuestions(
@@ -777,7 +1029,9 @@ importBtn.addEventListener(
     }
 
 
-    if(parsedQuestions.length === 0){
+    if (
+      parsedQuestions.length === 0
+    ) {
 
       showStatus(
         "No valid questions found. Click Preview first.",
@@ -785,33 +1039,47 @@ importBtn.addEventListener(
       );
 
       return;
+
     }
 
 
-    importBtn.disabled = true;
+    importBtn.disabled =
+      true;
+
 
     importBtn.textContent =
       "⏳ Importing...";
 
 
-    try{
+    try {
 
-      for(const q of parsedQuestions){
+
+      for (
+        const q of parsedQuestions
+      ) {
+
 
         await addDoc(
-          collection(db,"questions"),
+          collection(
+            db,
+            "questions"
+          ),
           {
 
-            quizId: quizId,
+            quizId:
+              quizId,
 
-            question: q.question,
+            question:
+              q.question,
 
-            options: q.options,
+            options:
+              q.options,
 
             correctAnswer:
               q.correctAnswer,
 
-            marks: q.marks,
+            marks:
+              q.marks,
 
             createdAt:
               serverTimestamp()
@@ -822,46 +1090,108 @@ importBtn.addEventListener(
       }
 
 
-      // Update question count
+      /*
+        Get existing quiz data
+        so we don't accidentally
+        reset the question count.
+      */
+
+      const quizRef =
+        doc(
+          db,
+          "quizzes",
+          quizId
+        );
+
+
+      /*
+        For now, refresh the
+        question count from Firestore.
+      */
+
+      const questionSnapshot =
+        await getDocs(
+          collection(
+            db,
+            "questions"
+          )
+        );
+
+
+      let totalQuestions = 0;
+
+
+      questionSnapshot.forEach(
+        (questionDoc) => {
+
+          const data =
+            questionDoc.data();
+
+
+          if (
+            data.quizId === quizId
+          ) {
+
+            totalQuestions++;
+
+          }
+
+        }
+      );
+
 
       await updateDoc(
-        doc(db,"quizzes",quizId),
+        quizRef,
         {
+
           questionCount:
-            parsedQuestions.length
+            totalQuestions
+
         }
       );
 
 
       showStatus(
-        `✅ ${parsedQuestions.length} questions imported successfully!`,
+        `✅ ${parsedQuestions.length} questions imported successfully! Total questions in this quiz: ${totalQuestions}`,
         "success"
       );
 
 
-      bulkQuestions.value = "";
+      bulkQuestions.value =
+        "";
 
-      previewArea.innerHTML = "";
+
+      previewArea.innerHTML =
+        "";
+
 
       questionCount.textContent =
         "Questions imported successfully.";
 
+
       parsedQuestions = [];
 
 
-    }catch(error){
+    } catch (error) {
 
-      console.error(error);
+
+      console.error(
+        "Import error:",
+        error
+      );
+
 
       showStatus(
-        "Import failed. Check Firebase permissions.",
+        "Import failed. Please check Firebase permissions.",
         "errorBox"
       );
 
     }
 
 
-    importBtn.disabled = false;
+    importBtn.disabled =
+      false;
+
 
     importBtn.textContent =
       "⚡ Import All Questions";
@@ -870,17 +1200,20 @@ importBtn.addEventListener(
 );
 
 
-/* =========================
+
+/* =========================================
    CLEAR
-========================= */
+========================================= */
 
 clearBtn.addEventListener(
   "click",
   () => {
 
-    bulkQuestions.value = "";
+    bulkQuestions.value =
+      "";
 
-    previewArea.innerHTML = "";
+    previewArea.innerHTML =
+      "";
 
     questionCount.textContent =
       "No questions parsed yet.";
@@ -894,27 +1227,52 @@ clearBtn.addEventListener(
 );
 
 
-/* =========================
-   HTML SAFETY
-========================= */
 
-function escapeHtml(text){
+/* =========================================
+   HTML ESCAPE
+========================================= */
 
-  return text
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+function escapeHtml(text) {
+
+  return String(text)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
 }
 
 
-/* =========================
-   STATUS
-========================= */
 
-function showStatus(message,className){
+/* =========================================
+   STATUS MESSAGE
+========================================= */
+
+function showStatus(
+  message,
+  className
+) {
 
   status.textContent =
     message;
