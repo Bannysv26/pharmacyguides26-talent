@@ -1,1 +1,1257 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="PharmacyGuides26 Talent - A modern platform for pharmacy quizzes, competitions, learning and student performance.">
+
+    <title>PharmacyGuides26 Talent</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6d5dfc;
+            --primary-dark: #5548dc;
+            --secondary: #13b8a6;
+            --dark: #0b1020;
+            --dark-2: #121a2f;
+            --text: #182033;
+            --muted: #667085;
+            --white: #ffffff;
+            --light: #f6f8fc;
+            --border: rgba(20, 30, 60, 0.09);
+            --shadow: 0 20px 60px rgba(30, 40, 90, 0.10);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.86);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1180px;
+            margin: auto;
+            height: 76px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 800;
+            font-size: 19px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 21px;
+            box-shadow: 0 8px 25px rgba(109, 93, 252, .25);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: #4b5565;
+            font-size: 14px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 11px 18px;
+            font-weight: 700;
+            transition: .25s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            color: white;
+            background: linear-gradient(135deg, var(--primary), #8c7cff);
+            box-shadow: 0 10px 25px rgba(109, 93, 252, .25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(109, 93, 252, .32);
+        }
+
+        .menu-btn {
+            display: none;
+            border: none;
+            background: transparent;
+            font-size: 26px;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            position: relative;
+            min-height: 680px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(109, 93, 252, .12), transparent 30%),
+                radial-gradient(circle at 85% 20%, rgba(19, 184, 166, .12), transparent 28%),
+                linear-gradient(180deg, #ffffff, #f6f8fc);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            border: 1px solid rgba(109, 93, 252, .08);
+            right: -180px;
+            top: 80px;
+        }
+
+        .hero-container {
+            width: 100%;
+            max-width: 1180px;
+            margin: auto;
+            padding: 90px 24px;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 70px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 13px;
+            background: rgba(109, 93, 252, .09);
+            color: var(--primary);
+            border: 1px solid rgba(109, 93, 252, .13);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 22px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #16b364;
+            border-radius: 50%;
+            box-shadow: 0 0 0 5px rgba(22, 179, 100, .12);
+        }
+
+        .hero h1 {
+            font-size: clamp(44px, 6vw, 76px);
+            line-height: 1.02;
+            letter-spacing: -3px;
+            margin-bottom: 24px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 620px;
+            font-size: 18px;
+            color: var(--muted);
+            margin-bottom: 32px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .hero-actions .btn {
+            padding: 14px 22px;
+        }
+
+        .hero-note {
+            margin-top: 22px;
+            font-size: 13px;
+            color: #7b8495;
+        }
+
+        /* ================= QUIZ CARD ================= */
+
+        .quiz-preview {
+            position: relative;
+        }
+
+        .quiz-card {
+            position: relative;
+            background: rgba(255,255,255,.92);
+            border: 1px solid rgba(20,30,60,.08);
+            border-radius: 28px;
+            padding: 26px;
+            box-shadow: 0 30px 80px rgba(39, 48, 90, .14);
+            transform: rotate(1deg);
+        }
+
+        .quiz-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .live-label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #dc3545;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .timer {
+            background: #f2f4f8;
+            border-radius: 10px;
+            padding: 7px 10px;
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .quiz-card h3 {
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .question {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .option {
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            margin-bottom: 9px;
+            font-size: 14px;
+            background: white;
+            transition: .2s;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            background: rgba(109, 93, 252, .04);
+        }
+
+        .option.active {
+            border-color: var(--primary);
+            background: rgba(109, 93, 252, .08);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .quiz-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            max-width: 1050px;
+            margin: -40px auto 0;
+            position: relative;
+            z-index: 10;
+            padding: 0 24px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .stat {
+            padding: 25px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 25px;
+            margin-bottom: 4px;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* ================= SECTION ================= */
+
+        section {
+            padding: 100px 24px;
+        }
+
+        .section-container {
+            max-width: 1180px;
+            margin: auto;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 50px;
+        }
+
+        .section-heading .eyebrow {
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(30px, 4vw, 44px);
+            letter-spacing: -1.5px;
+            margin-bottom: 13px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: .3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-7px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: grid;
+            place-items: center;
+            background: rgba(109,93,252,.10);
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 9px;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* ================= UPCOMING ================= */
+
+        .upcoming {
+            background: #ffffff;
+        }
+
+        .quiz-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .event-card {
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            background: white;
+        }
+
+        .event-date {
+            display: inline-block;
+            padding: 7px 10px;
+            background: #f0f2ff;
+            color: var(--primary);
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .event-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .event-card p {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .event-info {
+            display: flex;
+            justify-content: space-between;
+            color: #737c8e;
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+            padding-top: 15px;
+        }
+
+        /* ================= HOW IT WORKS ================= */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .step-number {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--dark);
+            color: white;
+            font-weight: 800;
+        }
+
+        .step h3 {
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta {
+            padding-top: 30px;
+        }
+
+        .cta-box {
+            max-width: 1050px;
+            margin: auto;
+            border-radius: 30px;
+            padding: 65px 35px;
+            text-align: center;
+            color: white;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(255,255,255,.14), transparent 25%),
+                radial-gradient(circle at 85% 80%, rgba(19,184,166,.25), transparent 30%),
+                linear-gradient(135deg, #10172c, #1c2550);
+            box-shadow: 0 30px 70px rgba(15,23,42,.20);
+        }
+
+        .cta-box h2 {
+            font-size: clamp(30px, 4vw, 46px);
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            color: rgba(255,255,255,.72);
+            max-width: 600px;
+            margin: auto auto 25px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            margin-top: 80px;
+            background: #090e1d;
+            color: white;
+            padding: 55px 24px 25px;
+        }
+
+        .footer-container {
+            max-width: 1180px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,.55);
+            margin-top: 8px;
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 22px;
+            color: rgba(255,255,255,.65);
+            font-size: 13px;
+        }
+
+        .copyright {
+            max-width: 1180px;
+            margin: 35px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,.08);
+            color: rgba(255,255,255,.4);
+            font-size: 12px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links,
+            .nav-buttons {
+                display: none;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                text-align: center;
+            }
+
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .quiz-card {
+                max-width: 500px;
+                margin: auto;
+            }
+
+            .features-grid,
+            .quiz-list,
+            .steps {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .nav-container {
+                height: 68px;
+                padding: 0 17px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .logo-icon {
+                width: 37px;
+                height: 37px;
+                border-radius: 11px;
+            }
+
+            .hero {
+                min-height: auto;
+            }
+
+            .hero-container {
+                padding: 70px 18px 90px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+                font-size: 45px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            .stats {
+                margin-top: -25px;
+                padding: 0 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat {
+                border-bottom: 1px solid var(--border);
+            }
+
+            .stat:nth-child(2) {
+                border-right: none;
+            }
+
+            .stat:nth-child(3),
+            .stat:nth-child(4) {
+                border-bottom: none;
+            }
+
+            section {
+                padding: 75px 18px;
+            }
+
+            .features-grid,
+            .quiz-list,
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-card {
+                padding: 20px;
+                transform: none;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <a href="#" class="logo">
+                <div class="logo-icon">🧪</div>
+                <div>PharmacyGuides<span>26</span> Talent</div>
+            </a>
+
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#quizzes">Quizzes</a>
+                <a href="#features">Features</a>
+                <a href="#how">How It Works</a>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="#" class="btn btn-outline">Login</a>
+                <a href="#" class="btn btn-primary">Register</a>
+            </div>
+
+            <button class="menu-btn">☰</button>
+
+        </div>
+    </nav>
+
+
+    <!-- ================= HERO ================= -->
+
+    <main id="home">
+
+        <section class="hero">
+
+            <div class="hero-container">
+
+                <div class="hero-content">
+
+                    <div class="badge">
+                        <span class="live-dot"></span>
+                        Pharmacy Learning & Competition Platform
+                    </div>
+
+                    <h1>
+                        Learn.
+                        <span class="gradient-text">Compete.</span>
+                        Grow.
+                    </h1>
+
+                    <p>
+                        Welcome to PharmacyGuides26 Talent — a dedicated
+                        platform for pharmacy students to challenge their
+                        knowledge through quizzes, competitions and
+                        performance-based learning.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <a href="#" class="btn btn-primary">
+                            🚀 Join the Talent Platform
+                        </a>
+
+                        <a href="#quizzes" class="btn btn-outline">
+                            Explore Quizzes →
+                        </a>
+
+                    </div>
+
+                    <div class="hero-note">
+                        Built for pharmacy students • Live quizzes • Results • Leaderboards
+                    </div>
+
+                </div>
+
+
+                <!-- QUIZ PREVIEW -->
+
+                <div class="quiz-preview">
+
+                    <div class="quiz-card">
+
+                        <div class="quiz-top">
+
+                            <div class="live-label">
+                                <span class="live-dot"></span>
+                                Live Quiz
+                            </div>
+
+                            <div class="timer">
+                                ⏱ 00:42
+                            </div>
+
+                        </div>
+
+                        <h3>Pharmacology Challenge</h3>
+
+                        <p class="question">
+                            Which receptor is primarily responsible for the
+                            pharmacological action described below?
+                        </p>
+
+                        <div class="option active">
+                            A. Receptor Alpha
+                        </div>
+
+                        <div class="option">
+                            B. Receptor Beta
+                        </div>
+
+                        <div class="option">
+                            C. Receptor Gamma
+                        </div>
+
+                        <div class="option">
+                            D. Receptor Delta
+                        </div>
+
+                        <div class="quiz-footer">
+                            <span class="progress">Question 12 of 50</span>
+
+                            <button class="btn btn-primary">
+                                Submit →
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= STATS ================= -->
+
+        <div class="stats">
+
+            <div class="stats-grid">
+
+                <div class="stat">
+                    <strong>20+</strong>
+                    <span>Students</span>
+                </div>
+
+                <div class="stat">
+                    <strong>50+</strong>
+                    <span>Quiz Questions</span>
+                </div>
+
+                <div class="stat">
+                    <strong>24/7</strong>
+                    <span>Learning Access</span>
+                </div>
+
+                <div class="stat">
+                    <strong>🏆</strong>
+                    <span>Competitive Learning</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= FEATURES ================= -->
+
+        <section id="features">
+
+            <div class="section-container">
+
+                <div class="section-heading">
+
+                    <div class="eyebrow">Platform Features</div>
+
+                    <h2>
+                        Everything you need to
+                        <span class="gradient-text">test your talent.</span>
+                    </h2>
+
+                    <p>
+                        A simple and focused environment designed
+                        specifically for pharmacy learners.
+                    </p>
+
+                </div>
+
+
+                <div class="features-grid">
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">🔴</div>
+
+                        <h3>Live Quizzes</h3>
+
+                        <p>
+                            Participate in real-time quizzes with
+                            countdown timers and instant submission.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">🏆</div>
+
+                        <h3>Leaderboard</h3>
+
+                        <p>
+                            See your quiz performance and rankings
+                            after completing competitions.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">📊</div>
+
+                        <h3>Performance</h3>
+
+                        <p>
+                            Track scores, correct answers and your
+                            learning progress over time.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">⏱️</div>
+
+                        <h3>Timed Challenges</h3>
+
+                        <p>
+                            Practice answering pharmacy questions
+                            under realistic time limits.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">📚</div>
+
+                        <h3>Quiz Library</h3>
+
+                        <p>
+                            Access previous competitions and
+                            practice questions.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">🎯</div>
+
+                        <h3>Focused Learning</h3>
+
+                        <p>
+                            Build confidence across major pharmacy
+                            subjects through regular testing.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= UPCOMING QUIZZES ================= -->
+
+        <section class="upcoming" id="quizzes">
+
+            <div class="section-container">
+
+                <div class="section-heading">
+
+                    <div class="eyebrow">Upcoming</div>
+
+                    <h2>Upcoming Quiz Challenges</h2>
+
+                    <p>
+                        New competitions and practice challenges
+                        will appear here.
+                    </p>
+
+                </div>
+
+
+                <div class="quiz-list">
+
+                    <div class="event-card">
+
+                        <span class="event-date">
+                            COMING SOON
+                        </span>
+
+                        <h3>Pharmacology Challenge</h3>
+
+                        <p>
+                            Test your knowledge of pharmacology
+                            concepts and drug mechanisms.
+                        </p>
+
+                        <div class="event-info">
+                            <span>📝 50 Questions</span>
+                            <span>⏱ 30 Min</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="event-card">
+
+                        <span class="event-date">
+                            COMING SOON
+                        </span>
+
+                        <h3>Pharmaceutics Challenge</h3>
+
+                        <p>
+                            Challenge yourself with formulation,
+                            dosage forms and pharmaceutical technology.
+                        </p>
+
+                        <div class="event-info">
+                            <span>📝 50 Questions</span>
+                            <span>⏱ 30 Min</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="event-card">
+
+                        <span class="event-date">
+                            COMING SOON
+                        </span>
+
+                        <h3>Pharma Master Challenge</h3>
+
+                        <p>
+                            A mixed-subject competition covering
+                            major pharmacy topics.
+                        </p>
+
+                        <div class="event-info">
+                            <span>📝 100 Questions</span>
+                            <span>⏱ 60 Min</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= HOW IT WORKS ================= -->
+
+        <section id="how">
+
+            <div class="section-container">
+
+                <div class="section-heading">
+
+                    <div class="eyebrow">Simple Process</div>
+
+                    <h2>How PharmacyGuides26 Talent Works</h2>
+
+                    <p>
+                        Three simple steps to start your journey.
+                    </p>
+
+                </div>
+
+
+                <div class="steps">
+
+                    <div class="step">
+
+                        <div class="step-number">01</div>
+
+                        <h3>Create Your Account</h3>
+
+                        <p>
+                            Register as a student and create your
+                            personal learning profile.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">02</div>
+
+                        <h3>Join a Quiz</h3>
+
+                        <p>
+                            Enter an available competition and
+                            answer questions within the given time.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step">
+
+                        <div class="step-number">03</div>
+
+                        <h3>See Your Results</h3>
+
+                        <p>
+                            View your score, performance and
+                            leaderboard position.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CTA ================= -->
+
+        <section class="cta">
+
+            <div class="cta-box">
+
+                <h2>Ready to test your pharmacy knowledge?</h2>
+
+                <p>
+                    Join PharmacyGuides26 Talent and take part in
+                    upcoming pharmacy quizzes and competitions.
+                </p>
+
+                <a href="#" class="btn btn-primary">
+                    Create Student Account →
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-container">
+
+            <div class="footer-brand">
+
+                <div class="logo">
+                    <div class="logo-icon">🧪</div>
+
+                    <div>
+                        PharmacyGuides<span>26</span> Talent
+                    </div>
+                </div>
+
+                <p>
+                    Learn • Compete • Grow
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="#home">Home</a>
+                <a href="#quizzes">Quizzes</a>
+                <a href="#features">Features</a>
+                <a href="#how">How It Works</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="copyright">
+            © 2026 PharmacyGuides26 Talent. All rights reserved.
+        </div>
+
+    </footer>
+
+</body>
+</html>
