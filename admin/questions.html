@@ -1,211 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Question Management | PharmacyGuides26 Talent</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<title>Question Management | PharmacyGuides26 Talent</title>
 
-    body {
-      background: #f4f6ff;
-      color: #172033;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 
-    header {
-      background: white;
-      padding: 18px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-    }
+body{
+  background:#f5f7ff;
+  color:#172033;
+  min-height:100vh;
+}
 
-    .logo {
-      font-size: 22px;
-      font-weight: 800;
-    }
+header{
+  background:white;
+  padding:18px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 12px rgba(0,0,0,.06);
+}
 
-    .logo span {
-      color: #5b5cf6;
-    }
+.logo{
+  font-size:22px;
+  font-weight:800;
+}
 
-    .back-btn {
-      background: linear-gradient(135deg,#5b5cf6,#8b4ff7);
-      color: white;
-      border: none;
-      padding: 11px 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 700;
-    }
+.logo span{
+  color:#6366f1;
+}
 
-    .container {
-      width: 90%;
-      max-width: 950px;
-      margin: 30px auto;
-    }
+.back-btn{
+  background:#6366f1;
+  color:white;
+  text-decoration:none;
+  padding:10px 17px;
+  border-radius:9px;
+  font-weight:700;
+}
 
-    .hero {
-      background: linear-gradient(135deg,#5856e8,#914cf5);
-      color: white;
-      padding: 28px;
-      border-radius: 18px;
-      margin-bottom: 22px;
-    }
+main{
+  width:90%;
+  max-width:1100px;
+  margin:30px auto;
+}
 
-    .hero h1 {
-      font-size: 28px;
-      margin-bottom: 7px;
-    }
+.hero{
+  background:linear-gradient(135deg,#4f46e5,#8b5cf6);
+  color:white;
+  padding:30px;
+  border-radius:20px;
+  margin-bottom:25px;
+}
 
-    .card {
-      background: white;
-      padding: 25px;
-      border-radius: 18px;
-      margin-bottom: 22px;
-      box-shadow: 0 8px 25px rgba(30,40,100,0.07);
-    }
+.hero h1{
+  margin-bottom:8px;
+}
 
-    h2 {
-      margin-bottom: 20px;
-    }
+.card{
+  background:white;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 7px 22px rgba(0,0,0,.06);
+  margin-bottom:25px;
+}
 
-    label {
-      display: block;
-      font-weight: 700;
-      margin: 15px 0 7px;
-    }
+label{
+  display:block;
+  font-weight:700;
+  margin-bottom:8px;
+}
 
-    select,
-    textarea,
-    input {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #d8dced;
-      border-radius: 10px;
-      font-size: 15px;
-      outline: none;
-    }
+select,textarea{
+  width:100%;
+  border:1px solid #d7dcef;
+  border-radius:10px;
+  padding:13px;
+  font-size:15px;
+  outline:none;
+}
 
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
+select{
+  margin-bottom:20px;
+}
 
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #625cf5;
-    }
+textarea{
+  min-height:420px;
+  resize:vertical;
+  line-height:1.5;
+}
 
-    .option {
-      margin-top: 10px;
-    }
+.example{
+  background:#f8f7ff;
+  border:1px solid #ddd6fe;
+  padding:15px;
+  border-radius:10px;
+  margin:15px 0;
+  white-space:pre-wrap;
+  font-size:14px;
+}
 
-    .correct-box {
-      background: #f1f2ff;
-      padding: 15px;
-      border-radius: 12px;
-      margin-top: 18px;
-    }
+.buttons{
+  display:flex;
+  gap:12px;
+  margin-top:18px;
+  flex-wrap:wrap;
+}
 
-    .correct-box label {
-      margin: 8px 0;
-      font-weight: 500;
-    }
+button{
+  border:none;
+  padding:12px 20px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+}
 
-    .correct-box input {
-      width: auto;
-      margin-right: 8px;
-    }
+.preview-btn{
+  background:#6366f1;
+  color:white;
+}
 
-    .save-btn {
-      width: 100%;
-      margin-top: 22px;
-      padding: 15px;
-      border: none;
-      border-radius: 11px;
-      background: linear-gradient(135deg,#5b5cf6,#914cf5);
-      color: white;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
-    }
+.import-btn{
+  background:#16a34a;
+  color:white;
+}
 
-    .save-btn:hover {
-      opacity: 0.92;
-    }
+.clear-btn{
+  background:#ef4444;
+  color:white;
+}
 
-    .message {
-      text-align: center;
-      margin-top: 15px;
-      font-weight: 700;
-    }
+.status{
+  margin-top:15px;
+  padding:12px;
+  border-radius:10px;
+  display:none;
+}
 
-    .question-item {
-      border: 1px solid #e2e4f0;
-      border-radius: 14px;
-      padding: 18px;
-      margin-top: 14px;
-    }
+.preview-item{
+  border:1px solid #e1e5f2;
+  border-radius:14px;
+  padding:18px;
+  margin-top:15px;
+  background:#fff;
+}
 
-    .question-number {
-      color: #5b5cf6;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
+.preview-item h3{
+  color:#6366f1;
+  margin-bottom:10px;
+}
 
-    .question-text {
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
+.option{
+  padding:7px 10px;
+  background:#f8f9ff;
+  margin:5px 0;
+  border-radius:7px;
+}
 
-    .option-line {
-      padding: 5px 0;
-      color: #555;
-    }
+.correct{
+  color:#15803d;
+  font-weight:700;
+  margin-top:10px;
+}
 
-    .correct-answer {
-      margin-top: 10px;
-      color: #16863b;
-      font-weight: 700;
-    }
+.error{
+  color:#dc2626;
+  font-weight:700;
+}
 
-    .empty {
-      text-align: center;
-      color: #777;
-      padding: 20px;
-    }
+.success{
+  color:#15803d;
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+}
 
-    @media(max-width:650px) {
-      header {
-        padding: 15px;
-      }
+.errorBox{
+  color:#b91c1c;
+  background:#fef2f2;
+  border:1px solid #fecaca;
+}
 
-      .container {
-        width: 94%;
-      }
+.question-count{
+  color:#6b7280;
+  margin-top:10px;
+}
 
-      .hero h1 {
-        font-size: 23px;
-      }
+@media(max-width:600px){
+  header{
+    padding:15px 4%;
+  }
 
-      .card {
-        padding: 18px;
-      }
+  .logo{
+    font-size:18px;
+  }
 
-      .logo {
-        font-size: 18px;
-      }
-    }
-  </style>
+  main{
+    width:94%;
+  }
+
+  .hero{
+    padding:22px;
+  }
+
+  textarea{
+    min-height:350px;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -215,431 +224,708 @@
     PharmacyGuides<span>26</span> Talent
   </div>
 
-  <button class="back-btn" onclick="location.href='index.html'">
+  <a href="index.html" class="back-btn">
     ← Admin Dashboard
-  </button>
+  </a>
 </header>
 
-<div class="container">
 
-  <div class="hero">
-    <h1>❓ Question Management</h1>
-    <p>Add MCQs and correct answers to your quizzes.</p>
-  </div>
+<main>
 
-  <div class="card">
+  <section class="hero">
+    <h1>❓ Bulk Question Import</h1>
+    <p>Paste multiple MCQs at once and import them automatically.</p>
+  </section>
 
-    <h2>➕ Add New Question</h2>
 
-    <label>Select Quiz</label>
+  <section class="card">
+
+    <h2>📚 Select Quiz</h2>
+    <br>
+
     <select id="quizSelect">
       <option value="">Loading quizzes...</option>
     </select>
 
-    <label>Question</label>
+    <h2>📋 Paste Questions</h2>
+    <br>
+
+    <div class="example">
+Example format:
+
+1. Which drug is primarily used as a bronchodilator in asthma?
+A. Salbutamol
+B. Omeprazole
+C. Metformin
+D. Atorvastatin
+Answer: A
+Marks: 1
+
+2. Which drug is a proton pump inhibitor?
+A. Salbutamol
+B. Omeprazole
+C. Metformin
+D. Atorvastatin
+Answer: B
+Marks: 1
+
+You can paste 10, 50, 100 or more questions together.
+    </div>
+
     <textarea
-      id="questionText"
-      placeholder="Enter your MCQ question..."
-    ></textarea>
+      id="bulkQuestions"
+      placeholder="Paste all your questions here..."></textarea>
 
-    <label>Option A</label>
-    <input id="optionA" placeholder="Enter option A">
+    <div class="buttons">
 
-    <label>Option B</label>
-    <input id="optionB" placeholder="Enter option B">
+      <button
+        class="preview-btn"
+        id="previewBtn">
+        🔍 Preview Questions
+      </button>
 
-    <label>Option C</label>
-    <input id="optionC" placeholder="Enter option C">
+      <button
+        class="import-btn"
+        id="importBtn">
+        ⚡ Import All Questions
+      </button>
 
-    <label>Option D</label>
-    <input id="optionD" placeholder="Enter option D">
-
-    <div class="correct-box">
-
-      <strong>Select Correct Answer</strong>
-
-      <label>
-        <input type="radio" name="correct" value="A">
-        Option A
-      </label>
-
-      <label>
-        <input type="radio" name="correct" value="B">
-        Option B
-      </label>
-
-      <label>
-        <input type="radio" name="correct" value="C">
-        Option C
-      </label>
-
-      <label>
-        <input type="radio" name="correct" value="D">
-        Option D
-      </label>
+      <button
+        class="clear-btn"
+        id="clearBtn">
+        🗑️ Clear
+      </button>
 
     </div>
 
-    <label>Marks</label>
-    <input
-      id="marks"
-      type="number"
-      value="1"
-      min="1"
-    >
+    <div id="status" class="status"></div>
 
-    <button class="save-btn" id="saveBtn">
-      💾 Save Question
-    </button>
+  </section>
 
-    <div class="message" id="message"></div>
 
-  </div>
+  <section class="card">
 
-  <div class="card">
+    <h2>👁️ Question Preview</h2>
 
-    <h2>📚 Questions in Selected Quiz</h2>
-
-    <div id="questionList">
-      <div class="empty">
-        Select a quiz to see its questions.
-      </div>
+    <div
+      id="questionCount"
+      class="question-count">
+      No questions parsed yet.
     </div>
 
-  </div>
+    <div id="previewArea"></div>
 
-</div>
+  </section>
+
+</main>
+
 
 <script type="module">
 
-  import { auth, db } from "../firebase-config.js";
+import { auth, db } from "../firebase-config.js";
 
-  import {
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-  import {
-    collection,
-    getDocs,
-    addDoc,
-    query,
-    where,
-    orderBy,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
-
-  const quizSelect = document.getElementById("quizSelect");
-  const questionText = document.getElementById("questionText");
-  const optionA = document.getElementById("optionA");
-  const optionB = document.getElementById("optionB");
-  const optionC = document.getElementById("optionC");
-  const optionD = document.getElementById("optionD");
-  const marks = document.getElementById("marks");
-  const saveBtn = document.getElementById("saveBtn");
-  const message = document.getElementById("message");
-  const questionList = document.getElementById("questionList");
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-  // Check admin login
-  onAuthStateChanged(auth, async (user) => {
+const ADMIN_UID = "Q8MSRJIIF1RoWf1TdJ16gnWMFJO2";
 
-    if (!user) {
-      window.location.href = "../login.html";
-      return;
+
+const quizSelect =
+  document.getElementById("quizSelect");
+
+const bulkQuestions =
+  document.getElementById("bulkQuestions");
+
+const previewBtn =
+  document.getElementById("previewBtn");
+
+const importBtn =
+  document.getElementById("importBtn");
+
+const clearBtn =
+  document.getElementById("clearBtn");
+
+const previewArea =
+  document.getElementById("previewArea");
+
+const questionCount =
+  document.getElementById("questionCount");
+
+const status =
+  document.getElementById("status");
+
+
+let parsedQuestions = [];
+
+
+/* =========================
+   ADMIN AUTHENTICATION
+========================= */
+
+onAuthStateChanged(auth, async (user) => {
+
+  if (!user) {
+    window.location.href = "../login.html";
+    return;
+  }
+
+  if (user.uid !== ADMIN_UID) {
+    alert("Access denied. Admins only.");
+    window.location.href = "../dashboard.html";
+    return;
+  }
+
+  await loadQuizzes();
+
+});
+
+
+/* =========================
+   LOAD QUIZZES
+========================= */
+
+async function loadQuizzes(){
+
+  try{
+
+    const snapshot =
+      await getDocs(collection(db,"quizzes"));
+
+    quizSelect.innerHTML =
+      `<option value="">Select a quiz</option>`;
+
+    snapshot.forEach((quizDoc)=>{
+
+      const quiz =
+        quizDoc.data();
+
+      const option =
+        document.createElement("option");
+
+      option.value =
+        quizDoc.id;
+
+      option.textContent =
+        quiz.title || "Untitled Quiz";
+
+      quizSelect.appendChild(option);
+
+    });
+
+  }catch(error){
+
+    console.error(error);
+
+    showStatus(
+      "Unable to load quizzes.",
+      "errorBox"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   PARSE QUESTIONS
+========================= */
+
+function parseQuestions(text){
+
+  const cleaned =
+    text
+      .replace(/\r/g,"")
+      .trim();
+
+  if(!cleaned){
+    return [];
+  }
+
+
+  /*
+    Split whenever a new numbered
+    question begins.
+
+    Supports:
+
+    1.
+    2.
+    3)
+
+  */
+
+  const blocks =
+    cleaned.split(
+      /(?=^\s*\d+\s*[\.\)]\s*)/m
+    );
+
+
+  const questions = [];
+
+
+  for(const block of blocks){
+
+    const lines =
+      block
+        .split("\n")
+        .map(line => line.trim())
+        .filter(Boolean);
+
+
+    if(lines.length < 6){
+      continue;
     }
 
-    await loadQuizzes();
 
-  });
+    // Remove question number
+    let questionText =
+      lines[0]
+        .replace(
+          /^\d+\s*[\.\)]\s*/,
+          ""
+        )
+        .trim();
 
 
-  // Load quizzes
-  async function loadQuizzes() {
+    let optionA = "";
+    let optionB = "";
+    let optionC = "";
+    let optionD = "";
 
-    try {
+    let answer = "";
+    let marks = 1;
 
-      const snapshot = await getDocs(
-        collection(db, "quizzes")
-      );
 
-      quizSelect.innerHTML =
-        '<option value="">Select a quiz</option>';
+    /*
+      Sometimes the question wraps
+      onto multiple lines.
 
-      if (snapshot.empty) {
+      We collect text until A.
+    */
 
-        quizSelect.innerHTML =
-          '<option value="">No quizzes found</option>';
+    let questionParts = [];
 
-        return;
+
+    for(let i=0; i<lines.length; i++){
+
+      const line = lines[i];
+
+
+      if(/^A[\.\):]\s*/i.test(line)){
+        optionA =
+          line.replace(
+            /^A[\.\):]\s*/i,
+            ""
+          ).trim();
+        continue;
       }
 
-      snapshot.forEach((doc) => {
 
-        const quiz = doc.data();
+      if(/^B[\.\):]\s*/i.test(line)){
+        optionB =
+          line.replace(
+            /^B[\.\):]\s*/i,
+            ""
+          ).trim();
+        continue;
+      }
 
-        const option = document.createElement("option");
 
-        option.value = doc.id;
+      if(/^C[\.\):]\s*/i.test(line)){
+        optionC =
+          line.replace(
+            /^C[\.\):]\s*/i,
+            ""
+          ).trim();
+        continue;
+      }
 
-        option.textContent =
-          quiz.title || "Untitled Quiz";
 
-        quizSelect.appendChild(option);
+      if(/^D[\.\):]\s*/i.test(line)){
+        optionD =
+          line.replace(
+            /^D[\.\):]\s*/i,
+            ""
+          ).trim();
+        continue;
+      }
+
+
+      if(/^Answer\s*:/i.test(line)){
+
+        answer =
+          line
+            .split(":")[1]
+            .trim()
+            .toUpperCase()
+            .charAt(0);
+
+        continue;
+      }
+
+
+      if(/^Marks\s*:/i.test(line)){
+
+        const value =
+          Number(
+            line
+              .split(":")[1]
+              .trim()
+          );
+
+        if(!isNaN(value) && value > 0){
+          marks = value;
+        }
+
+        continue;
+      }
+
+
+      /*
+        Anything before A is part
+        of the question.
+      */
+
+      if(!optionA){
+        questionParts.push(line);
+      }
+
+    }
+
+
+    if(questionParts.length > 0){
+      questionText =
+        questionParts.join(" ").trim();
+    }
+
+
+    if(
+      questionText &&
+      optionA &&
+      optionB &&
+      optionC &&
+      optionD &&
+      ["A","B","C","D"].includes(answer)
+    ){
+
+      questions.push({
+
+        question: questionText,
+
+        options: {
+          A: optionA,
+          B: optionB,
+          C: optionC,
+          D: optionD
+        },
+
+        correctAnswer: answer,
+
+        marks: marks
 
       });
-
-    } catch (error) {
-
-      console.error(error);
-
-      quizSelect.innerHTML =
-        '<option value="">Unable to load quizzes</option>';
 
     }
 
   }
 
 
-  // When quiz changes
-  quizSelect.addEventListener("change", async () => {
+  return questions;
 
-    if (!quizSelect.value) {
+}
 
-      questionList.innerHTML =
-        '<div class="empty">Select a quiz to see its questions.</div>';
+
+/* =========================
+   PREVIEW
+========================= */
+
+previewBtn.addEventListener(
+  "click",
+  () => {
+
+    parsedQuestions =
+      parseQuestions(
+        bulkQuestions.value
+      );
+
+
+    previewArea.innerHTML = "";
+
+
+    if(parsedQuestions.length === 0){
+
+      questionCount.textContent =
+        "No valid questions found.";
+
+      showStatus(
+        "Please check your format. Every question needs A, B, C, D and Answer.",
+        "errorBox"
+      );
 
       return;
     }
 
-    await loadQuestions();
 
-  });
-
-
-  // Save question
-  saveBtn.addEventListener("click", async () => {
-
-    message.textContent = "";
-    message.style.color = "";
-
-    const quizId = quizSelect.value;
-    const question = questionText.value.trim();
-    const a = optionA.value.trim();
-    const b = optionB.value.trim();
-    const c = optionC.value.trim();
-    const d = optionD.value.trim();
-    const selected = document.querySelector(
-      'input[name="correct"]:checked'
-    );
-    const markValue = Number(marks.value);
+    questionCount.textContent =
+      `${parsedQuestions.length} question(s) detected.`;
 
 
-    if (!quizId) {
+    parsedQuestions.forEach(
+      (q,index)=>{
 
-      showMessage("Please select a quiz.", "red");
-      return;
-
-    }
-
-    if (!question || !a || !b || !c || !d) {
-
-      showMessage("Please fill in all question and option fields.", "red");
-      return;
-
-    }
-
-    if (!selected) {
-
-      showMessage("Please select the correct answer.", "red");
-      return;
-
-    }
-
-
-    saveBtn.disabled = true;
-    saveBtn.textContent = "Saving...";
-
-
-    try {
-
-      await addDoc(
-        collection(db, "questions"),
-        {
-
-          quizId: quizId,
-
-          question: question,
-
-          options: {
-            A: a,
-            B: b,
-            C: c,
-            D: d
-          },
-
-          correctAnswer: selected.value,
-
-          marks: markValue,
-
-          createdAt: serverTimestamp()
-
-        }
-      );
-
-
-      showMessage(
-        "✅ Question saved successfully!",
-        "green"
-      );
-
-
-      questionText.value = "";
-      optionA.value = "";
-      optionB.value = "";
-      optionC.value = "";
-      optionD.value = "";
-
-      document.querySelectorAll(
-        'input[name="correct"]'
-      ).forEach(radio => {
-        radio.checked = false;
-      });
-
-      marks.value = 1;
-
-      await loadQuestions();
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      showMessage(
-        "❌ Could not save question. Check Firestore permissions.",
-        "red"
-      );
-
-    } finally {
-
-      saveBtn.disabled = false;
-      saveBtn.textContent = "💾 Save Question";
-
-    }
-
-  });
-
-
-  // Load questions
-  async function loadQuestions() {
-
-    questionList.innerHTML =
-      '<div class="empty">Loading questions...</div>';
-
-    try {
-
-      const q = query(
-        collection(db, "questions"),
-        where("quizId", "==", quizSelect.value)
-      );
-
-      const snapshot = await getDocs(q);
-
-      if (snapshot.empty) {
-
-        questionList.innerHTML =
-          '<div class="empty">No questions added yet.</div>';
-
-        return;
-
-      }
-
-
-      questionList.innerHTML = "";
-
-      let number = 1;
-
-      snapshot.forEach((doc) => {
-
-        const data = doc.data();
-
-        const item =
+        const div =
           document.createElement("div");
 
-        item.className = "question-item";
+        div.className =
+          "preview-item";
 
-        item.innerHTML = `
 
-          <div class="question-number">
-            Question ${number}
+        div.innerHTML = `
+
+          <h3>
+            Question ${index + 1}
+          </h3>
+
+          <p>
+            <strong>
+              ${escapeHtml(q.question)}
+            </strong>
+          </p>
+
+          <div class="option">
+            A. ${escapeHtml(q.options.A)}
           </div>
 
-          <div class="question-text">
-            ${escapeHTML(data.question)}
+          <div class="option">
+            B. ${escapeHtml(q.options.B)}
           </div>
 
-          <div class="option-line">
-            A. ${escapeHTML(data.options?.A || "")}
+          <div class="option">
+            C. ${escapeHtml(q.options.C)}
           </div>
 
-          <div class="option-line">
-            B. ${escapeHTML(data.options?.B || "")}
+          <div class="option">
+            D. ${escapeHtml(q.options.D)}
           </div>
 
-          <div class="option-line">
-            C. ${escapeHTML(data.options?.C || "")}
-          </div>
-
-          <div class="option-line">
-            D. ${escapeHTML(data.options?.D || "")}
-          </div>
-
-          <div class="correct-answer">
-            ✓ Correct Answer: ${data.correctAnswer}
-          </div>
-
-          <div style="margin-top:6px;">
-            Marks: ${data.marks || 1}
+          <div class="correct">
+            ✓ Correct Answer:
+            ${q.correctAnswer}
+            &nbsp; | &nbsp;
+            Marks: ${q.marks}
           </div>
 
         `;
 
-        questionList.appendChild(item);
 
-        number++;
+        previewArea.appendChild(div);
 
-      });
+      }
+    );
 
-    } catch (error) {
 
-      console.error(error);
+    showStatus(
+      `${parsedQuestions.length} questions ready for import.`,
+      "success"
+    );
 
-      questionList.innerHTML =
-        '<div class="empty">Could not load questions.</div>';
+  }
+);
+
+
+/* =========================
+   IMPORT QUESTIONS
+========================= */
+
+importBtn.addEventListener(
+  "click",
+  async () => {
+
+    const quizId =
+      quizSelect.value;
+
+
+    if(!quizId){
+
+      showStatus(
+        "Please select a quiz first.",
+        "errorBox"
+      );
+
+      return;
+    }
+
+
+    if(parsedQuestions.length === 0){
+
+      parsedQuestions =
+        parseQuestions(
+          bulkQuestions.value
+        );
 
     }
 
+
+    if(parsedQuestions.length === 0){
+
+      showStatus(
+        "No valid questions found. Click Preview first.",
+        "errorBox"
+      );
+
+      return;
+    }
+
+
+    importBtn.disabled = true;
+
+    importBtn.textContent =
+      "⏳ Importing...";
+
+
+    try{
+
+      for(const q of parsedQuestions){
+
+        await addDoc(
+          collection(db,"questions"),
+          {
+
+            quizId: quizId,
+
+            question: q.question,
+
+            options: q.options,
+
+            correctAnswer:
+              q.correctAnswer,
+
+            marks: q.marks,
+
+            createdAt:
+              serverTimestamp()
+
+          }
+        );
+
+      }
+
+
+      // Update question count
+
+      await updateDoc(
+        doc(db,"quizzes",quizId),
+        {
+          questionCount:
+            parsedQuestions.length
+        }
+      );
+
+
+      showStatus(
+        `✅ ${parsedQuestions.length} questions imported successfully!`,
+        "success"
+      );
+
+
+      bulkQuestions.value = "";
+
+      previewArea.innerHTML = "";
+
+      questionCount.textContent =
+        "Questions imported successfully.";
+
+      parsedQuestions = [];
+
+
+    }catch(error){
+
+      console.error(error);
+
+      showStatus(
+        "Import failed. Check Firebase permissions.",
+        "errorBox"
+      );
+
+    }
+
+
+    importBtn.disabled = false;
+
+    importBtn.textContent =
+      "⚡ Import All Questions";
+
   }
+);
 
 
-  function showMessage(text, color) {
+/* =========================
+   CLEAR
+========================= */
 
-    message.textContent = text;
-    message.style.color = color;
+clearBtn.addEventListener(
+  "click",
+  () => {
+
+    bulkQuestions.value = "";
+
+    previewArea.innerHTML = "";
+
+    questionCount.textContent =
+      "No questions parsed yet.";
+
+    parsedQuestions = [];
+
+    status.style.display =
+      "none";
 
   }
+);
 
 
-  function escapeHTML(value) {
+/* =========================
+   HTML SAFETY
+========================= */
 
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+function escapeHtml(text){
 
-  }
+  return text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showStatus(message,className){
+
+  status.textContent =
+    message;
+
+  status.className =
+    `status ${className}`;
+
+  status.style.display =
+    "block";
+
+}
 
 </script>
 
