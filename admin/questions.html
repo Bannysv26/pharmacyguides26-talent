@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question Management | PharmacyGuides26 Talent</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f6ff;
+      color: #172033;
+    }
+
+    header {
+      background: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #5b5cf6;
+    }
+
+    .back-btn {
+      background: linear-gradient(135deg,#5b5cf6,#8b4ff7);
+      color: white;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 950px;
+      margin: 30px auto;
+    }
+
+    .hero {
+      background: linear-gradient(135deg,#5856e8,#914cf5);
+      color: white;
+      padding: 28px;
+      border-radius: 18px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      margin-bottom: 7px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 25px rgba(30,40,100,0.07);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 15px 0 7px;
+    }
+
+    select,
+    textarea,
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d8dced;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: #625cf5;
+    }
+
+    .option {
+      margin-top: 10px;
+    }
+
+    .correct-box {
+      background: #f1f2ff;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 18px;
+    }
+
+    .correct-box label {
+      margin: 8px 0;
+      font-weight: 500;
+    }
+
+    .correct-box input {
+      width: auto;
+      margin-right: 8px;
+    }
+
+    .save-btn {
+      width: 100%;
+      margin-top: 22px;
+      padding: 15px;
+      border: none;
+      border-radius: 11px;
+      background: linear-gradient(135deg,#5b5cf6,#914cf5);
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .save-btn:hover {
+      opacity: 0.92;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: 700;
+    }
+
+    .question-item {
+      border: 1px solid #e2e4f0;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 14px;
+    }
+
+    .question-number {
+      color: #5b5cf6;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .question-text {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .option-line {
+      padding: 5px 0;
+      color: #555;
+    }
+
+    .correct-answer {
+      margin-top: 10px;
+      color: #16863b;
+      font-weight: 700;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 20px;
+    }
+
+    @media(max-width:650px) {
+      header {
+        padding: 15px;
+      }
+
+      .container {
+        width: 94%;
+      }
+
+      .hero h1 {
+        font-size: 23px;
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    PharmacyGuides<span>26</span> Talent
+  </div>
+
+  <button class="back-btn" onclick="location.href='index.html'">
+    ← Admin Dashboard
+  </button>
+</header>
+
+<div class="container">
+
+  <div class="hero">
+    <h1>❓ Question Management</h1>
+    <p>Add MCQs and correct answers to your quizzes.</p>
+  </div>
+
+  <div class="card">
+
+    <h2>➕ Add New Question</h2>
+
+    <label>Select Quiz</label>
+    <select id="quizSelect">
+      <option value="">Loading quizzes...</option>
+    </select>
+
+    <label>Question</label>
+    <textarea
+      id="questionText"
+      placeholder="Enter your MCQ question..."
+    ></textarea>
+
+    <label>Option A</label>
+    <input id="optionA" placeholder="Enter option A">
+
+    <label>Option B</label>
+    <input id="optionB" placeholder="Enter option B">
+
+    <label>Option C</label>
+    <input id="optionC" placeholder="Enter option C">
+
+    <label>Option D</label>
+    <input id="optionD" placeholder="Enter option D">
+
+    <div class="correct-box">
+
+      <strong>Select Correct Answer</strong>
+
+      <label>
+        <input type="radio" name="correct" value="A">
+        Option A
+      </label>
+
+      <label>
+        <input type="radio" name="correct" value="B">
+        Option B
+      </label>
+
+      <label>
+        <input type="radio" name="correct" value="C">
+        Option C
+      </label>
+
+      <label>
+        <input type="radio" name="correct" value="D">
+        Option D
+      </label>
+
+    </div>
+
+    <label>Marks</label>
+    <input
+      id="marks"
+      type="number"
+      value="1"
+      min="1"
+    >
+
+    <button class="save-btn" id="saveBtn">
+      💾 Save Question
+    </button>
+
+    <div class="message" id="message"></div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>📚 Questions in Selected Quiz</h2>
+
+    <div id="questionList">
+      <div class="empty">
+        Select a quiz to see its questions.
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+  import { auth, db } from "../firebase-config.js";
+
+  import {
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+  import {
+    collection,
+    getDocs,
+    addDoc,
+    query,
+    where,
+    orderBy,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+  const quizSelect = document.getElementById("quizSelect");
+  const questionText = document.getElementById("questionText");
+  const optionA = document.getElementById("optionA");
+  const optionB = document.getElementById("optionB");
+  const optionC = document.getElementById("optionC");
+  const optionD = document.getElementById("optionD");
+  const marks = document.getElementById("marks");
+  const saveBtn = document.getElementById("saveBtn");
+  const message = document.getElementById("message");
+  const questionList = document.getElementById("questionList");
+
+
+  // Check admin login
+  onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+      window.location.href = "../login.html";
+      return;
+    }
+
+    await loadQuizzes();
+
+  });
+
+
+  // Load quizzes
+  async function loadQuizzes() {
+
+    try {
+
+      const snapshot = await getDocs(
+        collection(db, "quizzes")
+      );
+
+      quizSelect.innerHTML =
+        '<option value="">Select a quiz</option>';
+
+      if (snapshot.empty) {
+
+        quizSelect.innerHTML =
+          '<option value="">No quizzes found</option>';
+
+        return;
+      }
+
+      snapshot.forEach((doc) => {
+
+        const quiz = doc.data();
+
+        const option = document.createElement("option");
+
+        option.value = doc.id;
+
+        option.textContent =
+          quiz.title || "Untitled Quiz";
+
+        quizSelect.appendChild(option);
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      quizSelect.innerHTML =
+        '<option value="">Unable to load quizzes</option>';
+
+    }
+
+  }
+
+
+  // When quiz changes
+  quizSelect.addEventListener("change", async () => {
+
+    if (!quizSelect.value) {
+
+      questionList.innerHTML =
+        '<div class="empty">Select a quiz to see its questions.</div>';
+
+      return;
+    }
+
+    await loadQuestions();
+
+  });
+
+
+  // Save question
+  saveBtn.addEventListener("click", async () => {
+
+    message.textContent = "";
+    message.style.color = "";
+
+    const quizId = quizSelect.value;
+    const question = questionText.value.trim();
+    const a = optionA.value.trim();
+    const b = optionB.value.trim();
+    const c = optionC.value.trim();
+    const d = optionD.value.trim();
+    const selected = document.querySelector(
+      'input[name="correct"]:checked'
+    );
+    const markValue = Number(marks.value);
+
+
+    if (!quizId) {
+
+      showMessage("Please select a quiz.", "red");
+      return;
+
+    }
+
+    if (!question || !a || !b || !c || !d) {
+
+      showMessage("Please fill in all question and option fields.", "red");
+      return;
+
+    }
+
+    if (!selected) {
+
+      showMessage("Please select the correct answer.", "red");
+      return;
+
+    }
+
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Saving...";
+
+
+    try {
+
+      await addDoc(
+        collection(db, "questions"),
+        {
+
+          quizId: quizId,
+
+          question: question,
+
+          options: {
+            A: a,
+            B: b,
+            C: c,
+            D: d
+          },
+
+          correctAnswer: selected.value,
+
+          marks: markValue,
+
+          createdAt: serverTimestamp()
+
+        }
+      );
+
+
+      showMessage(
+        "✅ Question saved successfully!",
+        "green"
+      );
+
+
+      questionText.value = "";
+      optionA.value = "";
+      optionB.value = "";
+      optionC.value = "";
+      optionD.value = "";
+
+      document.querySelectorAll(
+        'input[name="correct"]'
+      ).forEach(radio => {
+        radio.checked = false;
+      });
+
+      marks.value = 1;
+
+      await loadQuestions();
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      showMessage(
+        "❌ Could not save question. Check Firestore permissions.",
+        "red"
+      );
+
+    } finally {
+
+      saveBtn.disabled = false;
+      saveBtn.textContent = "💾 Save Question";
+
+    }
+
+  });
+
+
+  // Load questions
+  async function loadQuestions() {
+
+    questionList.innerHTML =
+      '<div class="empty">Loading questions...</div>';
+
+    try {
+
+      const q = query(
+        collection(db, "questions"),
+        where("quizId", "==", quizSelect.value)
+      );
+
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) {
+
+        questionList.innerHTML =
+          '<div class="empty">No questions added yet.</div>';
+
+        return;
+
+      }
+
+
+      questionList.innerHTML = "";
+
+      let number = 1;
+
+      snapshot.forEach((doc) => {
+
+        const data = doc.data();
+
+        const item =
+          document.createElement("div");
+
+        item.className = "question-item";
+
+        item.innerHTML = `
+
+          <div class="question-number">
+            Question ${number}
+          </div>
+
+          <div class="question-text">
+            ${escapeHTML(data.question)}
+          </div>
+
+          <div class="option-line">
+            A. ${escapeHTML(data.options?.A || "")}
+          </div>
+
+          <div class="option-line">
+            B. ${escapeHTML(data.options?.B || "")}
+          </div>
+
+          <div class="option-line">
+            C. ${escapeHTML(data.options?.C || "")}
+          </div>
+
+          <div class="option-line">
+            D. ${escapeHTML(data.options?.D || "")}
+          </div>
+
+          <div class="correct-answer">
+            ✓ Correct Answer: ${data.correctAnswer}
+          </div>
+
+          <div style="margin-top:6px;">
+            Marks: ${data.marks || 1}
+          </div>
+
+        `;
+
+        questionList.appendChild(item);
+
+        number++;
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      questionList.innerHTML =
+        '<div class="empty">Could not load questions.</div>';
+
+    }
+
+  }
+
+
+  function showMessage(text, color) {
+
+    message.textContent = text;
+    message.style.color = color;
+
+  }
+
+
+  function escapeHTML(value) {
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+</script>
+
+</body>
+</html>
