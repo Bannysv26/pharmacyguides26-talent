@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Result | PharmacyGuides26 Talent</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .result-card {
+      width: 100%;
+      max-width: 650px;
+      background: white;
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.10);
+    }
+
+    .icon {
+      font-size: 60px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .quiz-title {
+      color: #6b7280;
+      margin-bottom: 30px;
+    }
+
+    .score {
+      font-size: 56px;
+      font-weight: 800;
+      color: #4f46e5;
+      margin: 20px 0 5px;
+    }
+
+    .percentage {
+      font-size: 20px;
+      color: #374151;
+      margin-bottom: 30px;
+    }
+
+    .details {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .details p {
+      margin: 10px 0;
+      color: #374151;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      background: #4f46e5;
+      color: white;
+      padding: 14px 25px;
+      border-radius: 12px;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    .btn:hover {
+      background: #3730a3;
+    }
+
+    .btn.secondary {
+      background: #111827;
+    }
+
+    #loading {
+      color: #6b7280;
+    }
+
+    #error {
+      color: #dc2626;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="result-card">
+
+    <div class="icon">🏆</div>
+
+    <h1>Quiz Completed!</h1>
+
+    <p class="quiz-title" id="quizTitle">Loading result...</p>
+
+    <div id="loading">Please wait...</div>
+
+    <div id="resultContent" style="display:none;">
+
+      <div class="score" id="score">0 / 0</div>
+
+      <div class="percentage" id="percentage">0%</div>
+
+      <div class="details">
+        <p><strong>Student:</strong> <span id="studentName"></span></p>
+        <p><strong>Email:</strong> <span id="studentEmail"></span></p>
+        <p><strong>Marks Obtained:</strong> <span id="marks"></span></p>
+        <p><strong>Total Marks:</strong> <span id="totalMarks"></span></p>
+      </div>
+
+      <a href="dashboard.html" class="btn">
+        Dashboard
+      </a>
+
+      <a href="leaderboard.html" class="btn secondary">
+        Leaderboard
+      </a>
+
+    </div>
+
+    <div id="error"></div>
+
+  </div>
+
+
+  <script type="module">
+
+    import { auth, db } from "./firebase-config.js";
+
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+    import {
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+    const loading = document.getElementById("loading");
+    const resultContent = document.getElementById("resultContent");
+    const error = document.getElementById("error");
+
+
+    const params = new URLSearchParams(window.location.search);
+    const resultId = params.get("resultId");
+
+
+    onAuthStateChanged(auth, async (user) => {
+
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      if (!resultId) {
+        loading.style.display = "none";
+        error.textContent = "Result not found.";
+        return;
+      }
+
+      try {
+
+        const resultRef = doc(db, "results", resultId);
+
+        const resultSnap = await getDoc(resultRef);
+
+        if (!resultSnap.exists()) {
+          loading.style.display = "none";
+          error.textContent = "This result does not exist.";
+          return;
+        }
+
+
+        const result = resultSnap.data();
+
+
+        // Make sure the student can only view their own result
+        if (result.studentId !== user.uid) {
+          loading.style.display = "none";
+          error.textContent = "You are not allowed to view this result.";
+          return;
+        }
+
+
+        const score = Number(result.score || 0);
+        const totalMarks = Number(result.totalMarks || 0);
+
+        const percentage =
+          totalMarks > 0
+            ? Math.round((score / totalMarks) * 100)
+            : 0;
+
+
+        document.getElementById("quizTitle").textContent =
+          result.quizTitle || "Quiz";
+
+        document.getElementById("score").textContent =
+          `${score} / ${totalMarks}`;
+
+        document.getElementById("percentage").textContent =
+          `${percentage}%`;
+
+        document.getElementById("studentName").textContent =
+          result.studentName || user.displayName || "Student";
+
+        document.getElementById("studentEmail").textContent =
+          result.studentEmail || user.email || "";
+
+        document.getElementById("marks").textContent =
+          score;
+
+        document.getElementById("totalMarks").textContent =
+          totalMarks;
+
+
+        loading.style.display = "none";
+        resultContent.style.display = "block";
+
+      } catch (err) {
+
+        console.error(err);
+
+        loading.style.display = "none";
+        error.textContent =
+          "Unable to load result. Please try again.";
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
