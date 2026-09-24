@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Quiz | PharmacyGuides26 Talent</title>
+
+<style>
+*{box-sizing:border-box;font-family:Arial;margin:0}
+body{background:#f4f6ff;color:#172033}
+header{background:#fff;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px #0001}
+.logo{font-size:21px;font-weight:800}.logo span{color:#625cf5}
+.timer{background:#ef4444;color:#fff;padding:10px 16px;border-radius:10px;font-weight:800}
+main{width:90%;max-width:850px;margin:30px auto}
+.card{background:#fff;padding:25px;border-radius:18px;box-shadow:0 8px 25px #0001;margin-bottom:20px}
+.question{font-size:19px;font-weight:700;line-height:1.5;margin-bottom:20px}
+.option{display:block;padding:14px;margin:10px 0;border:1px solid #ddd;border-radius:10px;cursor:pointer}
+.option:hover{background:#f3f4ff}
+.option input{margin-right:10px}
+button{border:0;border-radius:10px;padding:13px 20px;background:#625cf5;color:#fff;font-weight:700;cursor:pointer}
+#submitBtn{width:100%;margin-top:15px}
+.message{text-align:center;padding:25px;color:#666}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">PharmacyGuides<span>26</span> Talent</div>
+<div class="timer" id="timer">--:--</div>
+</header>
+
+<main>
+
+<div class="card">
+<h2 id="quizTitle">Loading Quiz...</h2>
+<p id="progress" style="margin-top:8px;color:#777"></p>
+</div>
+
+<div id="quizArea">
+<div class="card message">Loading questions...</div>
+</div>
+
+<button id="submitBtn">Submit Quiz</button>
+
+</main>
+
+<script type="module">
+
+import {auth,db} from "./firebase-config.js";
+
+import {
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+collection,
+getDocs,
+doc,
+getDoc,
+addDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+const quizTitle=document.getElementById("quizTitle");
+const progress=document.getElementById("progress");
+const quizArea=document.getElementById("quizArea");
+const submitBtn=document.getElementById("submitBtn");
+const timer=document.getElementById("timer");
+
+let user=null;
+let questions=[];
+let quizId=null;
+let timeLeft=1800;
+let submitted=false;
+
+onAuthStateChanged(auth,async currentUser=>{
+
+if(!currentUser){
+location.href="login.html";
+return;
+}
+
+user=currentUser;
+
+const params=new URLSearchParams(location.search);
+
+quizId=params.get("quizId");
+
+if(!quizId){
+
+quizArea.innerHTML=
+'<div class="card message">No quiz selected.</div>';
+
+submitBtn.style.display="none";
+return;
+
+}
+
+await loadQuiz();
+
+});
+
+
+async function loadQuiz(){
+
+try{
+
+const quizSnap=await getDoc(
+doc(db,"quizzes",quizId)
+);
+
+if(!quizSnap.exists()){
+
+quizArea.innerHTML=
+'<div class="card message">Quiz not found.</div>';
+
+return;
+
+}
+
+const quiz=quizSnap.data();
+
+quizTitle.textContent=quiz.title || "Quiz";
+
+timeLeft=Number(quiz.duration || 30)*60;
+
+const questionSnap=await getDocs(
+collection(db,"questions")
+);
+
+questions=[];
+
+questionSnap.forEach(q=>{
+
+const data=q.data();
+
+if(data.quizId===quizId){
+
+questions.push({
+id:q.id,
+...data
+});
+
+}
+
+});
+
+if(questions.length===0){
+
+quizArea.innerHTML=
+'<div class="card message">No questions are available yet.</div>';
+
+submitBtn.style.display="none";
+
+return;
+
+}
+
+renderQuestions();
+
+startTimer();
+
+}catch(error){
+
+console.error(error);
+
+quizArea.innerHTML=
+'<div class="card message">Unable to load quiz.</div>';
+
+}
+
+}
+
+
+function renderQuestions(){
+
+quizArea.innerHTML="";
+
+questions.forEach((q,index)=>{
+
+const card=document.createElement("div");
+
+card.className="card";
+
+card.innerHTML=`
+
+<div class="question">
+${index+1}. ${escapeHTML(q.question)}
+</div>
+
+<label class="option">
+<input type="radio" name="q${index}" value="A">
+A. ${escapeHTML(q.options?.A || "")}
+</label>
+
+<label class="option">
+<input type="radio" name="q${index}" value="B">
+B. ${escapeHTML(q.options?.B || "")}
+</label>
+
+<label class="option">
+<input type="radio" name="q${index}" value="C">
+C. ${escapeHTML(q.options?.C || "")}
+</label>
+
+<label class="option">
+<input type="radio" name="q${index}" value="D">
+D. ${escapeHTML(q.options?.D || "")}
+</label>
+`;
+
+quizArea.appendChild(card);
+
+});
+
+progress.textContent=
+`${questions.length} question(s)`;
+
+}
+
+
+function startTimer(){
+
+const interval=setInterval(()=>{
+
+if(submitted){
+clearInterval(interval);
+return;
+}
+
+timeLeft--;
+
+const minutes=
+Math.floor(timeLeft/60);
+
+const seconds=
+timeLeft%60;
+
+timer.textContent=
+`${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+if(timeLeft<=0){
+
+clearInterval(interval);
+submitQuiz();
+
+}
+
+},1000);
+
+}
+
+
+submitBtn.addEventListener("click",()=>{
+
+if(!submitted){
+
+const confirmSubmit=
+confirm("Are you sure you want to submit the quiz?");
+
+if(confirmSubmit){
+
+submitQuiz();
+
+}
+
+}
+
+});
+
+
+async function submitQuiz(){
+
+if(submitted)return;
+
+submitted=true;
+
+submitBtn.disabled=true;
+submitBtn.textContent="Submitting...";
+
+let score=0;
+let totalMarks=0;
+
+questions.forEach((q,index)=>{
+
+const selected=
+document.querySelector(
+`input[name="q${index}"]:checked`
+);
+
+const marks=Number(q.marks || 1);
+
+totalMarks+=marks;
+
+if(selected &&
+selected.value===q.correctAnswer){
+
+score+=marks;
+
+}
+
+});
+
+
+try{
+
+const result=await addDoc(
+collection(db,"results"),
+{
+
+studentId:user.uid,
+
+studentName:
+user.displayName || "Student",
+
+studentEmail:
+user.email || "",
+
+quizId:quizId,
+
+quizTitle:
+quizTitle.textContent,
+
+score:score,
+
+totalMarks:totalMarks,
+
+submittedAt:serverTimestamp()
+
+});
+
+location.href=
+`results.html?resultId=${result.id}`;
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"Could not submit result. Please try again."
+);
+
+submitBtn.disabled=false;
+submitBtn.textContent="Submit Quiz";
+
+submitted=false;
+
+}
+
+}
+
+
+function escapeHTML(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
