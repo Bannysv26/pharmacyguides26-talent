@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leaderboard | PharmacyGuides26 Talent</title>
+
+<style>
+*{box-sizing:border-box;font-family:Arial;margin:0}
+body{background:#f4f6ff;color:#172033}
+header{background:white;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px #0001}
+.logo{font-size:21px;font-weight:800}
+.logo span{color:#625cf5}
+button{border:0;border-radius:9px;padding:11px 18px;font-weight:bold;cursor:pointer}
+.back{background:#625cf5;color:white}
+main{width:90%;max-width:1000px;margin:30px auto}
+.hero{background:linear-gradient(135deg,#5856e8,#914cf5);color:white;padding:30px;border-radius:20px;margin-bottom:22px}
+.card{background:white;padding:25px;border-radius:18px;box-shadow:0 8px 25px #0001}
+table{width:100%;border-collapse:collapse;margin-top:18px}
+th,td{text-align:left;padding:15px;border-bottom:1px solid #e5e7eb}
+th{background:#f7f7ff}
+.rank{font-weight:800;font-size:18px}
+.empty{text-align:center;padding:30px;color:#777}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">
+PharmacyGuides<span>26</span> Talent
+</div>
+
+<button class="back" onclick="location.href='index.html'">
+← Admin Dashboard
+</button>
+</header>
+
+<main>
+
+<div class="hero">
+<h1>🏆 Leaderboard</h1>
+<p>View student rankings based on quiz performance.</p>
+</div>
+
+<div class="card">
+
+<h2>Student Rankings</h2>
+
+<div id="leaderboard" class="empty">
+Loading leaderboard...
+</div>
+
+</div>
+
+</main>
+
+<script type="module">
+
+import {auth,db} from "../firebase-config.js";
+
+import {
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+const board=document.getElementById("leaderboard");
+
+onAuthStateChanged(auth,async user=>{
+
+if(!user){
+location.href="../login.html";
+return;
+}
+
+await loadLeaderboard();
+
+});
+
+async function loadLeaderboard(){
+
+try{
+
+const snap=await getDocs(
+collection(db,"results")
+);
+
+if(snap.empty){
+
+board.innerHTML=
+"No leaderboard data available yet.";
+
+return;
+
+}
+
+const scores={};
+
+snap.forEach(doc=>{
+
+const r=doc.data();
+
+const key=r.studentId || r.studentName || "Student";
+
+if(!scores[key]){
+
+scores[key]={
+name:r.studentName || "Student",
+score:0,
+attempts:0
+};
+
+}
+
+scores[key].score += Number(r.score || 0);
+scores[key].attempts++;
+
+});
+
+
+const ranking=Object.values(scores)
+.sort((a,b)=>b.score-a.score);
+
+
+let html=`
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Student</th>
+<th>Total Score</th>
+<th>Attempts</th>
+</tr>
+</thead>
+<tbody>
+`;
+
+ranking.forEach((student,index)=>{
+
+html+=`
+<tr>
+<td class="rank">${index+1}</td>
+<td>${escapeHTML(student.name)}</td>
+<td>${student.score}</td>
+<td>${student.attempts}</td>
+</tr>
+`;
+
+});
+
+html+=`
+</tbody>
+</table>
+`;
+
+board.innerHTML=html;
+
+}catch(error){
+
+console.error(error);
+
+board.innerHTML=
+"❌ Could not load leaderboard.";
+
+}
+
+}
+
+function escapeHTML(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
