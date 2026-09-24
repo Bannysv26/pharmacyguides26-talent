@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Students | PharmacyGuides26 Talent</title>
+
+<style>
+*{box-sizing:border-box;font-family:Arial;margin:0}
+body{background:#f4f6ff;color:#172033}
+header{background:#fff;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px #0001}
+.logo{font-size:21px;font-weight:800}.logo span{color:#625cf5}
+button{border:0;border-radius:9px;padding:11px 18px;font-weight:bold;cursor:pointer}
+.back{background:#625cf5;color:white}
+main{width:90%;max-width:1100px;margin:30px auto}
+.hero{background:linear-gradient(135deg,#5856e8,#914cf5);color:white;padding:30px;border-radius:20px;margin-bottom:22px}
+.card{background:white;padding:25px;border-radius:18px;box-shadow:0 8px 25px #0000000b}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th,td{text-align:left;padding:14px;border-bottom:1px solid #e5e7eb}
+th{background:#f7f7ff}
+.loading{text-align:center;padding:25px;color:#777}
+@media(max-width:700px){
+main{width:94%}
+table{font-size:13px}
+th,td{padding:9px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">PharmacyGuides<span>26</span> Talent</div>
+<button class="back" onclick="location.href='index.html'">
+← Admin Dashboard
+</button>
+</header>
+
+<main>
+
+<div class="hero">
+<h1>👥 Student Management</h1>
+<p>View registered PharmacyGuides26 Talent students.</p>
+</div>
+
+<div class="card">
+
+<h2>Registered Students</h2>
+
+<div id="studentArea" class="loading">
+Loading students...
+</div>
+
+</div>
+
+</main>
+
+<script type="module">
+
+import {auth,db} from "../firebase-config.js";
+
+import {
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+const area=document.getElementById("studentArea");
+
+onAuthStateChanged(auth,async user=>{
+
+if(!user){
+location.href="../login.html";
+return;
+}
+
+await loadStudents();
+
+});
+
+async function loadStudents(){
+
+try{
+
+const snap=await getDocs(
+collection(db,"students")
+);
+
+if(snap.empty){
+
+area.innerHTML="<div class='loading'>No students registered yet.</div>";
+return;
+
+}
+
+let html=`
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Email</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+`;
+
+let number=1;
+
+snap.forEach(doc=>{
+
+const student=doc.data();
+
+html+=`
+<tr>
+<td>${number}</td>
+<td>${escapeHTML(student.name||"Student")}</td>
+<td>${escapeHTML(student.email||"")}</td>
+<td>${escapeHTML(student.role||"student")}</td>
+</tr>
+`;
+
+number++;
+
+});
+
+html+=`</tbody></table>`;
+
+area.innerHTML=html;
+
+}catch(error){
+
+console.error(error);
+
+area.innerHTML=
+"<div class='loading'>❌ Could not load students.</div>";
+
+}
+
+}
+
+function escapeHTML(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
