@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Leaderboard | PharmacyGuides26 Talent</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      padding: 30px 15px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .header {
+      background: white;
+      border-radius: 22px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+    }
+
+    .header .icon {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #6b7280;
+    }
+
+    .table-card {
+      background: white;
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #4f46e5;
+      color: white;
+      padding: 15px;
+      text-align: left;
+    }
+
+    td {
+      padding: 15px;
+      border-bottom: 1px solid #e5e7eb;
+      color: #374151;
+    }
+
+    tr:hover {
+      background: #f8fafc;
+    }
+
+    .rank {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .top {
+      font-size: 22px;
+    }
+
+    .score {
+      font-weight: bold;
+      color: #4f46e5;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 35px;
+      color: #6b7280;
+    }
+
+    .buttons {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      background: #4f46e5;
+      color: white;
+      padding: 13px 22px;
+      border-radius: 12px;
+      font-weight: bold;
+      margin: 5px;
+    }
+
+    .btn.secondary {
+      background: #111827;
+    }
+
+    #loading {
+      text-align: center;
+      padding: 30px;
+      color: #6b7280;
+    }
+
+    #error {
+      text-align: center;
+      color: #dc2626;
+      padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+
+      th,
+      td {
+        padding: 10px;
+        font-size: 14px;
+      }
+
+      .header {
+        padding: 25px 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+
+      <div class="icon">🏆</div>
+
+      <h1>Leaderboard</h1>
+
+      <p class="subtitle">
+        PharmacyGuides26 Talent
+      </p>
+
+    </div>
+
+
+    <div class="table-card">
+
+      <div id="loading">
+        Loading leaderboard...
+      </div>
+
+      <div id="error"></div>
+
+      <table id="leaderboardTable" style="display:none;">
+
+        <thead>
+
+          <tr>
+            <th>Rank</th>
+            <th>Student</th>
+            <th>Quizzes</th>
+            <th>Total Score</th>
+            <th>Average</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="leaderboardBody"></tbody>
+
+      </table>
+
+      <div id="empty" class="empty" style="display:none;">
+        No quiz results yet.
+      </div>
+
+    </div>
+
+
+    <div class="buttons">
+
+      <a href="dashboard.html" class="btn">
+        Dashboard
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <script type="module">
+
+    import { auth, db } from "./firebase-config.js";
+
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+    import {
+      collection,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+    const loading =
+      document.getElementById("loading");
+
+    const error =
+      document.getElementById("error");
+
+    const table =
+      document.getElementById("leaderboardTable");
+
+    const body =
+      document.getElementById("leaderboardBody");
+
+    const empty =
+      document.getElementById("empty");
+
+
+    onAuthStateChanged(auth, async (user) => {
+
+      if (!user) {
+
+        window.location.href = "login.html";
+
+        return;
+      }
+
+
+      try {
+
+        const snapshot =
+          await getDocs(collection(db, "results"));
+
+
+        const students = {};
+
+
+        snapshot.forEach((doc) => {
+
+          const result = doc.data();
+
+          const studentId =
+            result.studentId;
+
+          if (!studentId) return;
+
+
+          if (!students[studentId]) {
+
+            students[studentId] = {
+
+              name:
+                result.studentName ||
+                "Student",
+
+              quizzes: 0,
+
+              totalScore: 0,
+
+              totalMarks: 0
+
+            };
+
+          }
+
+
+          students[studentId].quizzes++;
+
+          students[studentId].totalScore +=
+            Number(result.score || 0);
+
+          students[studentId].totalMarks +=
+            Number(result.totalMarks || 0);
+
+        });
+
+
+        const leaderboard =
+          Object.values(students);
+
+
+        leaderboard.sort((a, b) => {
+
+          const percentageA =
+            a.totalMarks > 0
+              ? a.totalScore / a.totalMarks
+              : 0;
+
+          const percentageB =
+            b.totalMarks > 0
+              ? b.totalScore / b.totalMarks
+              : 0;
+
+          return percentageB - percentageA;
+
+        });
+
+
+        loading.style.display = "none";
+
+
+        if (leaderboard.length === 0) {
+
+          empty.style.display = "block";
+
+          return;
+
+        }
+
+
+        leaderboard.forEach((student, index) => {
+
+          const percentage =
+            student.totalMarks > 0
+              ? Math.round(
+                  (student.totalScore /
+                    student.totalMarks) * 100
+                )
+              : 0;
+
+
+          const row =
+            document.createElement("tr");
+
+
+          let rankText =
+            index + 1;
+
+          if (index === 0) rankText = "🥇";
+          if (index === 1) rankText = "🥈";
+          if (index === 2) rankText = "🥉";
+
+
+          row.innerHTML = `
+
+            <td class="rank ${index < 3 ? "top" : ""}">
+              ${rankText}
+            </td>
+
+            <td>
+              ${student.name}
+            </td>
+
+            <td>
+              ${student.quizzes}
+            </td>
+
+            <td class="score">
+              ${student.totalScore}
+            </td>
+
+            <td>
+              ${percentage}%
+            </td>
+
+          `;
+
+
+          body.appendChild(row);
+
+        });
+
+
+        table.style.display = "table";
+
+
+      } catch (err) {
+
+        console.error(err);
+
+        loading.style.display = "none";
+
+        error.textContent =
+          "Unable to load leaderboard.";
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
