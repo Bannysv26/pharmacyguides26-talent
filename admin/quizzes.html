@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Management | PharmacyGuides26 Talent</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6ff;
+      color: #172033;
+    }
+
+    header {
+      background: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .logo span {
+      color: #6257f5;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      background: #6257f5;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    main {
+      width: 90%;
+      max-width: 1100px;
+      margin: 35px auto;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #6257f5, #8b4ff7);
+      color: white;
+      padding: 30px;
+      border-radius: 20px;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 {
+      margin-bottom: 8px;
+      font-size: 30px;
+    }
+
+    .hero p {
+      opacity: 0.9;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(40, 50, 100, 0.08);
+    }
+
+    .card h2 {
+      margin-bottom: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d7dbea;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #6257f5;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .create-btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #6257f5, #8b4ff7);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .create-btn:hover {
+      opacity: 0.92;
+    }
+
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .quiz-item {
+      border: 1px solid #e1e3ee;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .quiz-info h3 {
+      margin-bottom: 7px;
+    }
+
+    .quiz-info p {
+      color: #687086;
+      margin: 4px 0;
+    }
+
+    .delete-btn {
+      border: none;
+      background: #ff4d5a;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #73798a;
+    }
+
+    @media (max-width: 700px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .quiz-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      header {
+        padding: 15px 5%;
+      }
+
+      main {
+        width: 94%;
+      }
+
+      .hero h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    PharmacyGuides<span>26</span> Talent
+  </div>
+
+  <a href="index.html" class="back-btn">
+    ← Admin Dashboard
+  </a>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>📝 Quiz Management</h1>
+    <p>Create and manage pharmacy quizzes for students.</p>
+  </section>
+
+  <section class="card">
+
+    <h2>➕ Create New Quiz</h2>
+
+    <form id="quizForm">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label for="title">Quiz Title</label>
+          <input
+            type="text"
+            id="title"
+            placeholder="Example: Pharmacology Unit 1"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="subject">Subject</label>
+
+          <select id="subject" required>
+            <option value="">Select Subject</option>
+            <option value="Pharmacology">Pharmacology</option>
+            <option value="Pharmaceutics">Pharmaceutics</option>
+            <option value="Medicinal Chemistry">Medicinal Chemistry</option>
+            <option value="Pharmaceutical Analysis">Pharmaceutical Analysis</option>
+            <option value="Organic Chemistry">Organic Chemistry</option>
+            <option value="Pharmacognosy">Pharmacognosy</option>
+            <option value="Physical Pharmacy">Physical Pharmacy</option>
+            <option value="HAP">HAP</option>
+            <option value="Mixed">Mixed</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="description">Quiz Description</label>
+
+          <textarea
+            id="description"
+            placeholder="Enter a short description of this quiz..."
+            required
+          ></textarea>
+        </div>
+
+        <div class="field">
+          <label for="duration">Duration (minutes)</label>
+
+          <input
+            type="number"
+            id="duration"
+            min="1"
+            value="30"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="marks">Total Marks</label>
+
+          <input
+            type="number"
+            id="marks"
+            min="1"
+            value="10"
+            required
+          >
+        </div>
+
+      </div>
+
+      <button type="submit" class="create-btn">
+        🚀 Create Quiz
+      </button>
+
+      <div id="message"></div>
+
+    </form>
+
+  </section>
+
+  <section class="card">
+
+    <h2>📚 Created Quizzes</h2>
+
+    <div id="quizList">
+      <div class="empty">
+        Loading quizzes...
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<script type="module">
+
+  import { auth, db } from "../firebase-config.js";
+
+  import {
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+  import {
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+  const form = document.getElementById("quizForm");
+  const message = document.getElementById("message");
+  const quizList = document.getElementById("quizList");
+
+
+  // Check login
+  onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+      window.location.href = "../login.html";
+      return;
+    }
+
+    loadQuizzes();
+
+  });
+
+
+  // Create quiz
+  form.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    const title = document.getElementById("title").value.trim();
+    const subject = document.getElementById("subject").value;
+    const description = document.getElementById("description").value.trim();
+    const duration = Number(document.getElementById("duration").value);
+    const marks = Number(document.getElementById("marks").value);
+
+    message.style.color = "#555";
+    message.textContent = "Creating quiz...";
+
+    try {
+
+      await addDoc(collection(db, "quizzes"), {
+
+        title: title,
+        subject: subject,
+        description: description,
+        duration: duration,
+        totalMarks: marks,
+        questionCount: 0,
+        status: "draft",
+        createdAt: serverTimestamp()
+
+      });
+
+      message.style.color = "green";
+      message.textContent = "✅ Quiz created successfully!";
+
+      form.reset();
+
+      document.getElementById("duration").value = 30;
+      document.getElementById("marks").value = 10;
+
+      loadQuizzes();
+
+    } catch (error) {
+
+      console.error(error);
+
+      message.style.color = "red";
+      message.textContent =
+        "❌ Could not create quiz. Check Firestore permissions.";
+
+    }
+
+  });
+
+
+  // Load quizzes
+  async function loadQuizzes() {
+
+    try {
+
+      const snapshot =
+        await getDocs(collection(db, "quizzes"));
+
+      quizList.innerHTML = "";
+
+      if (snapshot.empty) {
+
+        quizList.innerHTML = `
+          <div class="empty">
+            No quizzes created yet.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      snapshot.forEach((quizDoc) => {
+
+        const quiz = quizDoc.data();
+
+        const item = document.createElement("div");
+
+        item.className = "quiz-item";
+
+        item.innerHTML = `
+
+          <div class="quiz-info">
+
+            <h3>📝 ${escapeHTML(quiz.title || "Untitled Quiz")}</h3>
+
+            <p>
+              📚 Subject:
+              ${escapeHTML(quiz.subject || "Not specified")}
+            </p>
+
+            <p>
+              ⏱️ Duration:
+              ${quiz.duration || 0} minutes
+            </p>
+
+            <p>
+              🎯 Total Marks:
+              ${quiz.totalMarks || 0}
+            </p>
+
+            <p>
+              ❓ Questions:
+              ${quiz.questionCount || 0}
+            </p>
+
+            <p>
+              📌 Status:
+              ${escapeHTML(quiz.status || "draft")}
+            </p>
+
+          </div>
+
+          <button
+            class="delete-btn"
+            data-id="${quizDoc.id}">
+            Delete
+          </button>
+
+        `;
+
+        quizList.appendChild(item);
+
+      });
+
+
+      document.querySelectorAll(".delete-btn")
+        .forEach((button) => {
+
+          button.addEventListener("click", async () => {
+
+            const id = button.dataset.id;
+
+            const confirmed =
+              confirm("Delete this quiz?");
+
+            if (!confirmed) return;
+
+            try {
+
+              await deleteDoc(
+                doc(db, "quizzes", id)
+              );
+
+              loadQuizzes();
+
+            } catch (error) {
+
+              console.error(error);
+
+              alert(
+                "Could not delete quiz. Check Firestore permissions."
+              );
+
+            }
+
+          });
+
+        });
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      quizList.innerHTML = `
+        <div class="empty">
+          ❌ Could not load quizzes.
+          <br><br>
+          Firestore permissions may need to be updated.
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  // Prevent HTML injection in displayed quiz text
+  function escapeHTML(value) {
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+</script>
+
+</body>
+</html>
