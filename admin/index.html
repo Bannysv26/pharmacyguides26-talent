@@ -275,7 +275,7 @@
         Create and manage pharmacy quizzes.
       </p>
 
-      <a href="#" class="action-btn">
+    <a href="quizzes.html" class="action-btn">
         Manage Quizzes
       </a>
 
@@ -292,7 +292,7 @@
         Add MCQs, options and correct answers.
       </p>
 
-      <a href="#" class="action-btn">
+     <a href="questions.html" class="action-btn">
         Manage Questions
       </a>
 
@@ -309,7 +309,7 @@
         Set date, start time and quiz duration.
       </p>
 
-      <a href="#" class="action-btn">
+    <a href="events.html" class="action-btn">
         Manage Events
       </a>
 
@@ -326,7 +326,7 @@
         View registered student accounts.
       </p>
 
-      <a href="#" class="action-btn">
+     <a href="students.html" class="action-btn">
         View Students
       </a>
 
@@ -343,7 +343,7 @@
         View student scores and performance.
       </p>
 
-      <a href="#" class="action-btn">
+      <a href="results.html" class="action-btn">
         View Results
       </a>
 
@@ -360,7 +360,7 @@
         View quiz rankings and scores.
       </p>
 
-      <a href="#" class="action-btn">
+      <a href="leaderboard.html" class="action-btn">
         View Leaderboard
       </a>
 
@@ -377,8 +377,6 @@
   </div>
 
 </main>
-
-
 <script type="module">
 
   import { auth } from "../firebase-config.js";
@@ -388,6 +386,7 @@
     signOut
   } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
+  const ADMIN_UID = "Q8MSRJIIF1RoWf1TdJ16gnWMFJO2";
 
   const welcomeMessage =
     document.getElementById("welcomeMessage");
@@ -398,15 +397,21 @@
 
   onAuthStateChanged(auth, (user) => {
 
+    // Not logged in
     if (!user) {
-
       window.location.href = "../login.html";
-
       return;
     }
 
-    const name =
-      user.displayName || "Admin";
+    // Logged in but NOT admin
+    if (user.uid !== ADMIN_UID) {
+      alert("Access denied. Admins only.");
+      window.location.href = "../dashboard.html";
+      return;
+    }
+
+    // Admin verified
+    const name = user.displayName || "Admin";
 
     welcomeMessage.textContent =
       `Welcome, ${name}! 👋`;
