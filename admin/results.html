@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Results | PharmacyGuides26 Talent</title>
+
+<style>
+*{box-sizing:border-box;font-family:Arial;margin:0}
+body{background:#f4f6ff;color:#172033}
+header{background:white;padding:18px 7%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px #0001}
+.logo{font-size:21px;font-weight:800}.logo span{color:#625cf5}
+button{border:0;border-radius:9px;padding:11px 18px;font-weight:bold;cursor:pointer}
+.back{background:#625cf5;color:white}
+main{width:90%;max-width:1100px;margin:30px auto}
+.hero{background:linear-gradient(135deg,#5856e8,#914cf5);color:white;padding:30px;border-radius:20px;margin-bottom:22px}
+.card{background:white;padding:25px;border-radius:18px;box-shadow:0 8px 25px #0001}
+table{width:100%;border-collapse:collapse;margin-top:18px}
+th,td{text-align:left;padding:14px;border-bottom:1px solid #e5e7eb}
+th{background:#f7f7ff}
+.center{text-align:center;padding:25px;color:#777}
+@media(max-width:700px){
+main{width:94%}
+table{font-size:13px}
+th,td{padding:9px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">PharmacyGuides<span>26</span> Talent</div>
+
+<button class="back" onclick="location.href='index.html'">
+← Admin Dashboard
+</button>
+</header>
+
+<main>
+
+<div class="hero">
+<h1>📊 Quiz Results</h1>
+<p>View student quiz submissions and scores.</p>
+</div>
+
+<div class="card">
+
+<h2>All Results</h2>
+
+<div id="results" class="center">
+Loading results...
+</div>
+
+</div>
+
+</main>
+
+<script type="module">
+
+import {auth,db} from "../firebase-config.js";
+
+import {
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+const results=document.getElementById("results");
+
+onAuthStateChanged(auth,async user=>{
+
+if(!user){
+location.href="../login.html";
+return;
+}
+
+await loadResults();
+
+});
+
+async function loadResults(){
+
+try{
+
+const snap=await getDocs(
+collection(db,"results")
+);
+
+if(snap.empty){
+
+results.innerHTML=
+"No quiz results available yet.";
+
+return;
+
+}
+
+let html=`
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Student</th>
+<th>Quiz</th>
+<th>Score</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+`;
+
+let n=1;
+
+snap.forEach(doc=>{
+
+const r=doc.data();
+
+html+=`
+<tr>
+<td>${n}</td>
+<td>${escapeHTML(r.studentName||"Student")}</td>
+<td>${escapeHTML(r.quizTitle||"Quiz")}</td>
+<td>${r.score ?? 0}</td>
+<td>${r.totalMarks ?? 0}</td>
+</tr>
+`;
+
+n++;
+
+});
+
+html+=`</tbody></table>`;
+
+results.innerHTML=html;
+
+}catch(error){
+
+console.error(error);
+
+results.innerHTML=
+"❌ Could not load results.";
+
+}
+
+}
+
+function escapeHTML(value){
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
